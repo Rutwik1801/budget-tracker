@@ -1,12 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 import { NavigationWrapper } from './navigation/NavigationWrapper';
+import { ExpensesContextProvider } from './store/expenses-context';
 
 export default function App() {
   return (
     <>
-      <StatusBar style="auto" />
+    <ExpensesContextProvider>
+      <StatusBar style="light" />
       <NavigationWrapper />
+    </ExpensesContextProvider>
     </>
   );
 }
