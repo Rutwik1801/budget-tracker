@@ -6,6 +6,7 @@ import { RecentExpenses } from "../screens/RecentExpenses";
 import { AllExpenses } from "../screens/AllExpenses";
 import { GlobalStyles } from "../constants/styles";
 import {Ionicons} from "@expo/vector-icons"
+import { IconButton } from "../components/UI/IconButton";
 
 export const ExpensesOverview = () => {
   const BottomTabs = createBottomTabNavigator();
@@ -13,7 +14,8 @@ export const ExpensesOverview = () => {
     headerStyle: {backgroundColor: GlobalStyles.colors.primary500},
     headerTintColor: "white",
     tabBarStyle:{backgroundColor:GlobalStyles.colors.primary500},
-    tabBarActiveTintColor: GlobalStyles.colors.accent500
+    tabBarActiveTintColor: GlobalStyles.colors.accent500,
+    headerRight: ({tintColor}) => <IconButton icon="add" size={28} color={tintColor} onPress={() => {}} />
   }}>
     <BottomTabs.Screen name="RecentExpenses" component={RecentExpenses}
      options={{title: "Recent Expenses", 
