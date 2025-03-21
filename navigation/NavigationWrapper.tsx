@@ -33,7 +33,7 @@ export const NavigationWrapper = () => {
 
   return <NavigationContainer>
     <Stack.Navigator screenOptions={({navigation}) => ({
-    headerStyle: {backgroundColor: GlobalStyles.colors.primary500},
+    headerStyle: {backgroundColor: GlobalStyles.colors.primary200},
     headerTintColor: "white",
   })}>
       <Stack.Screen name="ExpensesOverview" component={ExpensesOverview} options={{headerShown: false}} />

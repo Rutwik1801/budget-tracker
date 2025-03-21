@@ -4,40 +4,46 @@ import { IconButton } from "../components/UI/IconButton"
 import { GlobalStyles } from "../constants/styles"
 import { Button } from "../components/UI/Button"
 import { ExpensesContext } from "../store/expenses-context"
+import { ExpenseForm } from "../components/manageExpense/ExpenseForm"
 
 export const ManageExpenses = ({route, navigation}) => {
-  const expensesCtx = useContext(ExpensesContext)
   const editedExpenseId = route.params?.expenseId
   const isEditing = !!editedExpenseId
+      const expensesCtx = useContext(ExpensesContext)
+
+    const deleteExpenseHandler = () => {
+      expensesCtx.deleteExpense(editedExpenseId)
+      navigation.goBack();
+    }
+    const confirmHandler = (expenseData) => {
+      const expenseObject = {
+        ...expenseData,
+        id: editedExpenseId ? editedExpenseId : Math.random().toString(),
+        date: new Date(expenseData.date),
+        amount: parseFloat(expenseData.amount).toFixed(2),
+      }
+      if(isEditing) {
+        expensesCtx.updateExpense(editedExpenseId, expenseObject)
+      } else {
+        expensesCtx.addExpense(expenseObject)
+      }
+      navigation.goBack();
+    }
+    const cancelPressHandler = () => {
+      navigation.goBack();
+    }
+  
+  
   useLayoutEffect(() => {
     navigation.setOptions({
       title: isEditing ? "Edit Expense" : "Add Expense"
     })
   }, [navigation, isEditing])
 
-  const deleteExpenseHandler = () => {
-    expensesCtx.deleteExpense(editedExpenseId)
-    navigation.goBack();
-  }
-  const confirmHandler = () => {
-    if(isEditing) {
-      expensesCtx.updateExpense(editedExpenseId, { description: "Updated now"})
-    } else {
-      expensesCtx.addExpense({date: new Date(), description: "fffff", amount: 23.333, id: Math.random()})
-    }
-    navigation.goBack();
-  }
-  const cancelPressHandler = () => {
-    navigation.goBack();
-  }
 
   return <View style={styles.container} >
-    <View style={styles.buttonContainer}>
-      <Button buttonContainerStyle={styles.button} mode="flat" onPress={cancelPressHandler} >Cancel</Button>
-      <Button buttonContainerStyle={styles.button} onPress={confirmHandler} >{isEditing ? "Update" : "Add"}</Button>
-    </View>
-    {isEditing && <View style={styles.delete} ><IconButton icon="trash" color={GlobalStyles.colors.error500} size={36} onPress={deleteExpenseHandler} /></View>}
-  </View>
+    <ExpenseForm onSubmit={confirmHandler} onDelete={deleteExpenseHandler} onCancel={cancelPressHandler} editedExpenseId={editedExpenseId} />
+      </View>
 }
 
 const styles = StyleSheet.create({
