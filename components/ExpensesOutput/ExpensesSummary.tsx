@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View } from "react-native"
 import { GlobalStyles } from "../../constants/styles"
+import { Expense } from "../../store/expenses-context";
 
-export const ExpensesSummary = ({periodName, expenses}) => {
-  const expensesSum = expenses.reduce((sum, expense) => {
-    return sum + (parseFloat(expense.amount) ?? 0)}, 0);
+export const ExpensesSummary:React.FC<{periodName: string, expenses: Expense[]}> = ({periodName, expenses}) => {
+  const expensesSum = expenses.reduce((sum: number, expense: Expense) => {
+    return sum + (expense.amount ?? 0)}, 0);
   return <View style={styles.container}>
         <Text style={styles.period} >{periodName}</Text>
         <Text style={styles.sum} >{`$${expensesSum?.toFixed(2)}`}</Text>

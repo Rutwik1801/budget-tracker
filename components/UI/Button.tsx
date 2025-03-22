@@ -1,7 +1,13 @@
 import { Pressable, StyleSheet, Text, View } from "react-native"
 import { GlobalStyles } from "../../constants/styles"
+import { PropsWithChildren } from "react"
 
-export const Button = ({ children, onPress, mode, buttonContainerStyle }) => {
+type ButtonProps = {
+  onPress: () => void,
+  mode?: "flat",
+  buttonContainerStyle: Object
+}
+export const Button:React.FC<PropsWithChildren<ButtonProps>> = ({ children, onPress, mode, buttonContainerStyle }) => {
   return <View style={buttonContainerStyle}>
     <Pressable onPress={onPress} style={({pressed}) => pressed && styles.pressed} >
       <View style={[styles.button, mode === "flat" && styles.flat]} >

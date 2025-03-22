@@ -1,8 +1,15 @@
 import { StyleSheet, Text, TextInput, View } from "react-native"
 import { GlobalStyles } from "../../constants/styles"
 
-export const Input = ({label, style, textInputConfig, invalid}) => {
-  const inputStyles = [styles.input]
+type InputProps = {
+  label: string,
+  style?: Object,
+  textInputConfig?: Record<string, any>,
+  invalid?: boolean
+}
+
+export const Input:React.FC<InputProps> = ({label, style, textInputConfig, invalid}) => {
+  const inputStyles: any = [styles.input]
   if (textInputConfig && textInputConfig.multiline) {
     inputStyles.push(styles.inputMultiline)
   }

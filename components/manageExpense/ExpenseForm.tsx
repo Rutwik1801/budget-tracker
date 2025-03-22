@@ -2,31 +2,37 @@ import {  StyleSheet, Text, TextInput, View } from "react-native"
 import { Input } from "./Input"
 import { GlobalStyles } from "../../constants/styles"
 import { useContext, useState } from "react"
-import { ExpensesContext } from "../../store/expenses-context"
+import { Expense, ExpensesContext } from "../../store/expenses-context"
 import { IconButton } from "../UI/IconButton"
 import { Button } from "../UI/Button"
 import { getFormattedDate } from "../../utils/date"
 
-export const ExpenseForm = ({onSubmit, onCancel, editedExpenseId, onDelete}) => {
+type ExpenseFormProps = {
+  onSubmit: (expenseObject: any) => void,
+  onCancel: () => void,
+  editedExpenseId: string,
+  onDelete: () => void
+}
+
+export const ExpenseForm: React.FC<ExpenseFormProps> = ({onSubmit, onCancel, editedExpenseId, onDelete}) => {
   const expensesCtx = useContext(ExpensesContext)
     const isEditing = !!editedExpenseId;
-    let editedExpense = {
-      amount: "",
-      date: "",
-      description: ""
-    }
+    let editedExpense;
     if(isEditing) {
-      editedExpense = expensesCtx.expenses.find(item => item.id === editedExpenseId);
+      const temp = expensesCtx.expenses.find(item => item.id === editedExpenseId)
+      if(temp) {
+        editedExpense = temp;
+      }
     }
   const [expense, setExpense] = useState({
-    amount: {value: isEditing ? editedExpense.amount.toString(): editedExpense.amount, isValid: true},
-    description: {value: editedExpense.description, isValid: true},
-    date: {value: isEditing ? getFormattedDate(editedExpense.date): editedExpense.date, isValid: true}
+    amount: {value: isEditing ? editedExpense?.amount: editedExpense?.amount, isValid: true},
+    description: {value: editedExpense?.description, isValid: true},
+    date: {value: isEditing ? (editedExpense?.date ? getFormattedDate(editedExpense?.date) : new Date()): editedExpense?.date, isValid: true}
   })
   const handleSubmit = () => {
-    const amountIsValid = !isNaN(expense.amount.value) && expense.amount.value > 0;
-    const dateIsValid = new Date(expense.date.value).toString() !== "Invalid Date";
-    const descriptionIsValid = expense.description.value.trim().length > 0;
+    const amountIsValid = !isNaN(expense?.amount.value as number) && (expense?.amount.value as number) > 0;
+    const dateIsValid = new Date((expense?.date.value) as Date).toString() !== "Invalid Date";
+    const descriptionIsValid = (expense?.description?.value as string)?.trim()?.length > 0;
     if(!amountIsValid || !dateIsValid || !descriptionIsValid) {
       setExpense(prev => ({
         amount: {value: prev.amount.value, isValid: amountIsValid},
@@ -43,7 +49,7 @@ export const ExpenseForm = ({onSubmit, onCancel, editedExpenseId, onDelete}) => 
     onSubmit(expenseObject)
   }
 
-  const handleInputChange = (inputIdentifier, enteredValue) => {
+  const handleInputChange = (inputIdentifier: string, enteredValue: any) => {
     setExpense((prev) => (
       {...prev, [inputIdentifier]: {...prev[inputIdentifier], value: enteredValue}}))
   }

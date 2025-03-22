@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native"
 import { IconButton } from "../components/UI/IconButton"
 import { GlobalStyles } from "../constants/styles"
 import { Button } from "../components/UI/Button"
-import { ExpensesContext } from "../store/expenses-context"
+import { Expense, ExpensesContext } from "../store/expenses-context"
 import { ExpenseForm } from "../components/manageExpense/ExpenseForm"
 
 export const ManageExpenses = ({route, navigation}) => {
@@ -15,12 +15,12 @@ export const ManageExpenses = ({route, navigation}) => {
       expensesCtx.deleteExpense(editedExpenseId)
       navigation.goBack();
     }
-    const confirmHandler = (expenseData) => {
+    const confirmHandler = (expenseData: any) => {
       const expenseObject = {
         ...expenseData,
         id: editedExpenseId ? editedExpenseId : Math.random().toString(),
         date: new Date(expenseData.date),
-        amount: parseFloat(expenseData.amount).toFixed(2),
+        amount: parseFloat(parseFloat(expenseData.amount).toFixed(2)),
       }
       if(isEditing) {
         expensesCtx.updateExpense(editedExpenseId, expenseObject)
