@@ -59,5 +59,5 @@ const styles = StyleSheet.create({
     minWidth: 80
   },
   amount: {
-    color:GlobalStyles.colors.primary500, fontWeight: "bold"}
+    color:GlobalStyles.colors.error500, fontWeight: "bold"}
 })

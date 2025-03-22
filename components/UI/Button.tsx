@@ -15,17 +15,14 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 4,
     padding: 8,
-    backgroundColor: GlobalStyles.colors.primary200,
+    backgroundColor: GlobalStyles.colors.accent500,
   },
   flat: {
-    backgroundColor: 'transparent'
+    backgroundColor: GlobalStyles.colors.primary200
   },
   buttonText: {
     color: "white",
     textAlign: "center"
-  },
-  flatText: {
-    color: GlobalStyles.colors.primary200,
   },
   pressed: {
     opacity: 0.75,

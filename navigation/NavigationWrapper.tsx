@@ -15,6 +15,7 @@ export const ExpensesOverview = () => {
     headerTintColor: "white",
     tabBarStyle:{backgroundColor:GlobalStyles.colors.primary500},
     tabBarActiveTintColor: GlobalStyles.colors.accent500,
+    tabBarInactiveTintColor: GlobalStyles.colors.primary50,
     headerRight: ({tintColor}) => <IconButton icon="add" size={28} color={tintColor} onPress={() => {navigation.navigate("ManageExpense")}} />
   })}>
     <BottomTabs.Screen name="RecentExpenses" component={RecentExpenses}

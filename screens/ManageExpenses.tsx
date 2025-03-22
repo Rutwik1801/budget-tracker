@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 24,
-    backgroundColor: GlobalStyles.colors.primary500
+    backgroundColor: GlobalStyles.colors.primary700
   },
   delete: {
     marginTop: 16,
