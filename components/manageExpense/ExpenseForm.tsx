@@ -1,11 +1,12 @@
-import {  StyleSheet, Text, TextInput, View } from "react-native"
+import {  StyleSheet, Text, View } from "react-native"
 import { Input } from "./Input"
 import { GlobalStyles } from "../../constants/styles"
 import { useContext, useState } from "react"
-import { Expense, ExpensesContext } from "../../store/expenses-context"
+import { ExpensesContext } from "../../store/expenses-context"
 import { IconButton } from "../UI/IconButton"
 import { Button } from "../UI/Button"
 import { getFormattedDate } from "../../utils/date"
+import { CategorySelect } from "./CategorySelect"
 
 type ExpenseFormProps = {
   onSubmit: (expenseObject: any) => void,
@@ -55,6 +56,7 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({onSubmit, onCancel, edi
   }
   return <View style={styles.form}>
     <Text style={styles.title} >Your Expense</Text>
+    <CategorySelect />
     <View style={styles.inputsRow}>
     <Input style= {styles.rowInput} label="Amount" textInputConfig={{
       keyboardType: "decimal-pad",
@@ -94,17 +96,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "white",
+    color: GlobalStyles.colors.primary50,
     marginVertical: 24,
     textAlign: 'center'
   },
   inputsRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: "center"
+    justifyContent: "space-between",
+    alignItems: "stretch"
   }, 
   rowInput: {
-    flex: 1
+    flex: 1,
   },
   container: {
     flex: 1,

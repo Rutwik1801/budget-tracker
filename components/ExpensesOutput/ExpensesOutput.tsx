@@ -20,11 +20,11 @@ export const ExpensesOutput: React.FC<{expenses: Expense[], expensesPeriod: stri
 const styles=StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24, 
-    backgroundColor: GlobalStyles.colors.primary700,
+    padding: 16, 
+    backgroundColor: GlobalStyles.colors.primary50,
   },
   infoText: {
-    color: "white",
+    color: GlobalStyles.colors.primary50,
     fontSize: 16,
     textAlign: "center",
     marginTop: 32

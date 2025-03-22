@@ -1,4 +1,4 @@
-import { Text, View } from "react-native"
+import { View } from "react-native"
 import { ExpensesOutput } from "../components/ExpensesOutput/ExpensesOutput"
 import { useContext } from "react"
 import { ExpensesContext } from "../store/expenses-context"

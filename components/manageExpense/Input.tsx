@@ -29,11 +29,11 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    color: GlobalStyles.colors.primary400,
+    color: GlobalStyles.colors.primary800,
     marginBottom: 4
   },
   input: {
-backgroundColor: GlobalStyles.colors.primary100,
+borderWidth: 1,
 color:GlobalStyles.colors.primary800,
 padding: 6,
 borderRadius: 6,

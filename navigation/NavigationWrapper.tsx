@@ -11,9 +11,9 @@ import { IconButton } from "../components/UI/IconButton";
 export const ExpensesOverview = () => {
   const BottomTabs = createBottomTabNavigator();
   return (<BottomTabs.Navigator screenOptions={({ navigation }) => ({
-    headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
-    headerTintColor: "white",
-    tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
+    headerStyle: { backgroundColor: GlobalStyles.colors.primary800 },
+    headerTintColor: GlobalStyles.colors.primary50,
+    tabBarStyle: { backgroundColor: GlobalStyles.colors.primary800 },
     tabBarActiveTintColor: GlobalStyles.colors.accent500,
     tabBarInactiveTintColor: GlobalStyles.colors.primary50,
     headerRight: ({ tintColor }) => <IconButton icon="add" size={28} color={tintColor} onPress={() => { navigation.navigate("ManageExpense") }} />
@@ -36,8 +36,8 @@ export const NavigationWrapper = () => {
 
   return <NavigationContainer>
     <Stack.Navigator screenOptions={({ navigation }) => ({
-      headerStyle: { backgroundColor: GlobalStyles.colors.primary200 },
-      headerTintColor: "white",
+      headerStyle: { backgroundColor: GlobalStyles.colors.primary800 },
+      headerTintColor: GlobalStyles.colors.primary50,
     })}>
       <Stack.Screen name="ExpensesOverview" component={ExpensesOverview} options={{ headerShown: false }} />
       <Stack.Screen name="ManageExpense" component={ManageExpenses} options={{

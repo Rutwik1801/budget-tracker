@@ -14,19 +14,21 @@ export const ExpensesSummary:React.FC<{periodName: string, expenses: Expense[]}>
 const styles = StyleSheet.create({
   container: {
     padding: 8,
-    backgroundColor: GlobalStyles.colors.primary50,
+    backgroundColor: GlobalStyles.colors.primary800,
     borderRadius: 6,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    minHeight: 50,
+    marginBottom: 4
   },
   period: {
-    fontSize:12,
-    color: GlobalStyles.colors.primary400,
+    fontSize:16,
+    color: GlobalStyles.colors.primary50,
   },
   sum: {
-    fontSize: 16,
+    fontSize: 28,
     fontWeight: "bold",
-    color: GlobalStyles.colors.primary500
+    color: GlobalStyles.colors.primary50
   }
 })

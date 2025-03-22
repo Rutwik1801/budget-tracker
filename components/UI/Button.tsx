@@ -22,12 +22,14 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 8,
     backgroundColor: GlobalStyles.colors.accent500,
+    borderColor: "black",
+    borderWidth: 1
   },
   flat: {
     backgroundColor: GlobalStyles.colors.primary200
   },
   buttonText: {
-    color: "white",
+    color: GlobalStyles.colors.primary50,
     textAlign: "center"
   },
   pressed: {
