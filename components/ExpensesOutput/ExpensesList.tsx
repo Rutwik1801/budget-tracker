@@ -8,6 +8,6 @@ const renderExpenseItem = (itemData) => {
 
 export const ExpensesList:React.FC<{expenses: Expense[]}> = ({expenses}) => {
   return <View>
-    <FlatList data={expenses} renderItem={renderExpenseItem} keyExtractor={(item) => item.id} />
+    <FlatList showsVerticalScrollIndicator={false} data={expenses} renderItem={renderExpenseItem} keyExtractor={(item) => item.id} />
   </View>
 }

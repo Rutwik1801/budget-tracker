@@ -3,8 +3,9 @@ import { GlobalStyles } from "../../constants/styles"
 import { getFormattedDate } from "../../utils/date"
 import { useNavigation } from "@react-navigation/native"
 import { Expense } from "../../store/expenses-context"
+import { IconButton } from "../UI/IconButton"
 
-export const ExpenseItem: React.FC<Expense> = ({id, description, amount, date}) => {
+export const ExpenseItem: React.FC<Expense> = ({id, description, amount, date, category}) => {
   const navigation = useNavigation()
   const expensePressHandler = () => {
     navigation.navigate("ManageExpense", {expenseId: id})
@@ -19,10 +20,13 @@ export const ExpenseItem: React.FC<Expense> = ({id, description, amount, date}) 
       </View>
       <View style={styles.amountContainer}>
       <Text style={styles.amount} >{`$${amount}`}</Text>
+        <View style={{flexDirection:"row", alignItems:"center", backgroundColor: GlobalStyles.colors.accent500, borderRadius: 3, paddingRight: 8}}>
+      <IconButton icon={category.value} size={24} color={GlobalStyles.colors.primary50} onPress={() => {}} />
+      <Text style={{color:GlobalStyles.colors.primary50}}>{category.label}</Text>
+        </View>
       </View>
     </View>
   </Pressable>
-
 }
 
 const styles = StyleSheet.create({
@@ -52,7 +56,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   amountContainer: {
-    justifyContent: "center",
+    flexDirection:"row",
+    alignItems:"center",
+    justifyContent: "space-between",
     borderRadius: 4,
     minWidth: 80
   },

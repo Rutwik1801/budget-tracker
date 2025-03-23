@@ -28,7 +28,8 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({onSubmit, onCancel, edi
   const [expense, setExpense] = useState({
     amount: {value: isEditing ? editedExpense?.amount: editedExpense?.amount, isValid: true},
     description: {value: editedExpense?.description, isValid: true},
-    date: {value: isEditing ? (editedExpense?.date ? getFormattedDate(editedExpense?.date) : new Date()): editedExpense?.date, isValid: true}
+    date: {value: isEditing ? (editedExpense?.date ? getFormattedDate(editedExpense?.date) : new Date()): editedExpense?.date, isValid: true},
+    category: {value: isEditing ? editedExpense?.category: {label: "Others", value: "airplane-outline"}, isValid: true}
   })
   const handleSubmit = () => {
     const amountIsValid = !isNaN(expense?.amount.value as number) && (expense?.amount.value as number) > 0;
@@ -38,7 +39,8 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({onSubmit, onCancel, edi
       setExpense(prev => ({
         amount: {value: prev.amount.value, isValid: amountIsValid},
         description: {value: prev.description.value, isValid: descriptionIsValid},
-        date: {value: prev.date.value, isValid: dateIsValid}
+        date: {value: prev.date.value, isValid: dateIsValid},
+        category: {value: prev.category.value, isValid: true}
       }))
       return;
     }
@@ -46,6 +48,7 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({onSubmit, onCancel, edi
       amount: expense.amount.value,
       date: expense.date.value,
       description: expense.description.value,
+      category: expense.category.value
     }
     onSubmit(expenseObject)
   }
@@ -56,7 +59,7 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({onSubmit, onCancel, edi
   }
   return <View style={styles.form}>
     <Text style={styles.title} >Your Expense</Text>
-    <CategorySelect />
+    <CategorySelect onChange={handleInputChange.bind(this, "category")} defaultCategory={expense.category.value}/>
     <View style={styles.inputsRow}>
     <Input style= {styles.rowInput} label="Amount" textInputConfig={{
       keyboardType: "decimal-pad",
