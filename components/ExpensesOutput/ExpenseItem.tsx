@@ -20,9 +20,9 @@ export const ExpenseItem: React.FC<Expense> = ({id, description, amount, date, c
       </View>
       <View style={styles.amountContainer}>
       <Text style={styles.amount} >{`$${amount}`}</Text>
-        <View style={{flexDirection:"row", alignItems:"center", backgroundColor: GlobalStyles.colors.accent500, borderRadius: 3, paddingRight: 8}}>
-      <IconButton icon={category.value} size={24} color={GlobalStyles.colors.primary50} onPress={() => {}} />
-      <Text style={{color:GlobalStyles.colors.primary50}}>{category.label}</Text>
+        <View style={{flexDirection:"row", alignItems:"center", backgroundColor: GlobalStyles.colors.primary50, borderRadius: 3, paddingRight: 8}}>
+      <IconButton icon={category.value} size={24} color={GlobalStyles.colors.primary800} onPress={() => {}} />
+      <Text style={{color:GlobalStyles.colors.primary800}}>{category.label}</Text>
         </View>
       </View>
     </View>

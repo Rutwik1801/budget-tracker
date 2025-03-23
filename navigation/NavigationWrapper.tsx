@@ -7,6 +7,7 @@ import { AllExpenses } from "../screens/AllExpenses";
 import { GlobalStyles } from "../constants/styles";
 import { Ionicons } from "@expo/vector-icons"
 import { IconButton } from "../components/UI/IconButton";
+import { Analytics } from "../screens/Analytics";
 
 export const ExpensesOverview = () => {
   const BottomTabs = createBottomTabNavigator();
@@ -23,6 +24,11 @@ export const ExpensesOverview = () => {
         title: "Recent Expenses",
         tabBarLabel: "Recent", tabBarIcon: ({ color, size }) => <Ionicons name="hourglass" size={size} color={color} />
       }} />
+      <BottomTabs.Screen name="Analytics" component={Analytics}
+        options={{
+          title: "Analytics",
+          tabBarLabel: "Analytics", tabBarIcon: ({ color, size }) => <Ionicons name="analytics" size={size} color={color} />
+        }} />
     <BottomTabs.Screen name="AllExpenses" component={AllExpenses}
       options={{
         title: "All Expenses",

@@ -1,4 +1,4 @@
-import { FlatList, Text, View } from "react-native"
+import { FlatList, View } from "react-native"
 import { ExpenseItem } from "./ExpenseItem"
 import { Expense } from "../../store/expenses-context"
 
