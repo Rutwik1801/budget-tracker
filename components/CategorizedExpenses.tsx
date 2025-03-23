@@ -1,13 +1,11 @@
-import { StyleSheet, Text, View } from "react-native"
+import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native"
 import { GlobalStyles } from "../constants/styles"
 import { IconButton } from "./UI/IconButton"
 
 export const CategorizedExpenses = ({ segregatedExpenses, totalAmount }) => {
 
   return <View style={{ padding: 8 }}>
-    {Object.entries(segregatedExpenses).map((values, idx) => {
-      return (<CategorizedExpense values={values} totalAmount={totalAmount} />)
-    })}
+    <FlatList data={Object.entries(segregatedExpenses)} keyExtractor={(item) => item[0]} renderItem={(item) => (<CategorizedExpense values={item.item} totalAmount={totalAmount} />)} />
   </View>
 }
 

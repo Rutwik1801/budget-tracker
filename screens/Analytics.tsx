@@ -4,6 +4,7 @@ import { useContext } from "react"
 import { ExpensesContext } from "../store/expenses-context"
 import { getDateMinusDays } from "../utils/date"
 import { CategorizedExpenses } from "../components/CategorizedExpenses"
+import PieChartExample from "../components/charts/PieChart"
 
 export const Analytics = () => {
   const expensesCtx = useContext(ExpensesContext)
@@ -22,6 +23,7 @@ export const Analytics = () => {
     totalAmount+=expense.amount
   })
   return <View style={{flex: 1}}>
+    <PieChartExample />
     <CategorizedExpenses segregatedExpenses={segregatedExpenses} totalAmount={totalAmount} />
     </View>
 }
