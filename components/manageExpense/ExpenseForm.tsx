@@ -1,12 +1,12 @@
-import {  StyleSheet, Text, View } from "react-native"
+import { ScrollView, StyleSheet, Text, View } from "react-native"
 import { Input } from "./Input"
 import { GlobalStyles } from "../../constants/styles"
 import { useContext, useState } from "react"
 import { ExpensesContext } from "../../store/expenses-context"
 import { IconButton } from "../UI/IconButton"
 import { Button } from "../UI/Button"
-import { getFormattedDate } from "../../utils/date"
 import { CategorySelect } from "./CategorySelect"
+import DateTimePicker, { useDefaultStyles } from "react-native-ui-datepicker"
 
 type ExpenseFormProps = {
   onSubmit: (expenseObject: any) => void,
@@ -15,32 +15,35 @@ type ExpenseFormProps = {
   onDelete: () => void
 }
 
-export const ExpenseForm: React.FC<ExpenseFormProps> = ({onSubmit, onCancel, editedExpenseId, onDelete}) => {
+export const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit, onCancel, editedExpenseId, onDelete }) => {
   const expensesCtx = useContext(ExpensesContext)
-    const isEditing = !!editedExpenseId;
-    let editedExpense;
-    if(isEditing) {
-      const temp = expensesCtx.expenses.find(item => item.id === editedExpenseId)
-      if(temp) {
-        editedExpense = temp;
-      }
+  const isEditing = !!editedExpenseId;
+  let editedExpense;
+  if (isEditing) {
+    const temp = expensesCtx.expenses.find(item => item.id === editedExpenseId)
+    if (temp) {
+      editedExpense = temp;
     }
+  }
+
   const [expense, setExpense] = useState({
-    amount: {value: isEditing ? editedExpense?.amount: editedExpense?.amount, isValid: true},
-    description: {value: editedExpense?.description, isValid: true},
-    date: {value: isEditing ? (editedExpense?.date ? getFormattedDate(editedExpense?.date) : new Date()): editedExpense?.date, isValid: true},
-    category: {value: isEditing ? editedExpense?.category: {label: "Others", value: "airplane-outline"}, isValid: true}
+    amount: { value: isEditing ? editedExpense?.amount : editedExpense?.amount, isValid: true },
+    description: { value: editedExpense?.description, isValid: true },
+    date: { value: isEditing ? editedExpense?.date : new Date(), isValid: true },
+    category: { value: isEditing ? editedExpense?.category : { label: "Others", value: "airplane-outline" }, isValid: true }
   })
+
+
   const handleSubmit = () => {
     const amountIsValid = !isNaN(expense?.amount.value as number) && (expense?.amount.value as number) > 0;
     const dateIsValid = new Date((expense?.date.value) as Date).toString() !== "Invalid Date";
     const descriptionIsValid = (expense?.description?.value as string)?.trim()?.length > 0;
-    if(!amountIsValid || !dateIsValid || !descriptionIsValid) {
+    if (!amountIsValid || !dateIsValid || !descriptionIsValid) {
       setExpense(prev => ({
-        amount: {value: prev.amount.value, isValid: amountIsValid},
-        description: {value: prev.description.value, isValid: descriptionIsValid},
-        date: {value: prev.date.value, isValid: dateIsValid},
-        category: {value: prev.category.value, isValid: true}
+        amount: { value: prev.amount.value, isValid: amountIsValid },
+        description: { value: prev.description.value, isValid: descriptionIsValid },
+        date: { value: prev.date.value, isValid: dateIsValid },
+        category: { value: prev.category.value, isValid: true }
       }))
       return;
     }
@@ -54,42 +57,46 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({onSubmit, onCancel, edi
   }
 
   const handleInputChange = (inputIdentifier: string, enteredValue: any) => {
-    setExpense((prev) => (
-      {...prev, [inputIdentifier]: {...prev[inputIdentifier], value: enteredValue}}))
-  }
-  return <View style={styles.form}>
-    <Text style={styles.title} >Your Expense</Text>
-    <CategorySelect onChange={handleInputChange.bind(this, "category")} defaultCategory={expense.category.value}/>
+    setExpense((prev) => ({
+      ...prev,
+      [inputIdentifier]: {
+        ...prev[inputIdentifier],
+        value: inputIdentifier === "date" ? new Date(enteredValue.date) : enteredValue,
+      },
+    }));
+  };
+
+  return <ScrollView style={styles.form} showsVerticalScrollIndicator={false} >
     <View style={styles.inputsRow}>
-    <Input style= {styles.rowInput} label="Amount" textInputConfig={{
-      keyboardType: "decimal-pad",
-      onChangeText: handleInputChange.bind(this, "amount"),
-      value: expense.amount.value
-    }} 
-    invalid={!expense.amount.isValid}
-    />
-    <Input style={styles.rowInput} label="Date" textInputConfig={{
-      placeholder: 'YYYY-MM-DD',
-      maxlength:10,
-      onChangeText: handleInputChange.bind(this, "date"),
-      value: expense.date.value
-    }} 
-    invalid={!expense.date.isValid}
-    />
+      <Input style={styles.rowInput} label="Amount" textInputConfig={{
+        keyboardType: "decimal-pad",
+        onChangeText: handleInputChange.bind(this, "amount"),
+        value: expense.amount.value ? parseFloat(expense.amount.value).toFixed(2) : expense.amount.value 
+      }}
+        invalid={!expense.amount.isValid}
+      />
     </View>
+    <Text>Date</Text>
+    <DateTimePicker
+      mode="single"
+      date={expense.date.value}
+      onChange={(date) => date && handleInputChange("date", date)}
+      styles={useDefaultStyles()}
+    />
+    <CategorySelect onChange={handleInputChange.bind(this, "category")} defaultCategory={expense.category.value} />
     <Input label="Description" textInputConfig={{
       multiline: true,
       onChangeText: handleInputChange.bind(this, "description"),
       value: expense.description.value
     }}
-    invalid={!expense.description.isValid}
+      invalid={!expense.description.isValid}
     />
-        <View style={styles.buttonContainer}>
-          <Button buttonContainerStyle={styles.button} mode="flat" onPress={onCancel} >Cancel</Button>
-          <Button buttonContainerStyle={styles.button} onPress={handleSubmit} >{isEditing ? "Update" : "Add"}</Button>
-        </View>
-        {isEditing && <View style={styles.delete} ><IconButton icon="trash" color={GlobalStyles.colors.error500} size={36} onPress={onDelete} /></View>}
-      </View>
+    <View style={styles.buttonContainer}>
+      <Button buttonContainerStyle={styles.button} mode="flat" onPress={onCancel} >Cancel</Button>
+      <Button buttonContainerStyle={styles.button} onPress={handleSubmit} >{isEditing ? "Update" : "Add"}</Button>
+    </View>
+    {isEditing && <View style={styles.delete} ><IconButton icon="trash" color={GlobalStyles.colors.error500} size={36} onPress={onDelete} /></View>}
+  </ScrollView>
 }
 
 const styles = StyleSheet.create({
@@ -99,7 +106,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "bold",
-    color: GlobalStyles.colors.primary50,
+    color: GlobalStyles.colors.primary800,
     marginVertical: 24,
     textAlign: 'center'
   },
@@ -107,7 +114,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: "space-between",
     alignItems: "stretch"
-  }, 
+  },
   rowInput: {
     flex: 1,
   },
@@ -124,7 +131,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   buttonContainer: {
-    flexDirection:"row",
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center"
   },

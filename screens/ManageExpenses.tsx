@@ -1,9 +1,7 @@
 import { useContext, useLayoutEffect } from "react"
-import { StyleSheet, Text, View } from "react-native"
-import { IconButton } from "../components/UI/IconButton"
+import { StyleSheet, View } from "react-native"
 import { GlobalStyles } from "../constants/styles"
-import { Button } from "../components/UI/Button"
-import { Expense, ExpensesContext } from "../store/expenses-context"
+import { ExpensesContext } from "../store/expenses-context"
 import { ExpenseForm } from "../components/manageExpense/ExpenseForm"
 
 export const ManageExpenses = ({route, navigation}) => {
