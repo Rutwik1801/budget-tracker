@@ -8,6 +8,7 @@ import { GlobalStyles } from "../constants/styles";
 import { Ionicons } from "@expo/vector-icons"
 import { IconButton } from "../components/UI/IconButton";
 import { Analytics } from "../screens/Analytics";
+import { DateWiseExpenses } from "../screens/DateWiseExpenses";
 
 export const ExpensesOverview = () => {
   const BottomTabs = createBottomTabNavigator();
@@ -47,6 +48,9 @@ export const NavigationWrapper = () => {
     })}>
       <Stack.Screen name="ExpensesOverview" component={ExpensesOverview} options={{ headerShown: false }} />
       <Stack.Screen name="ManageExpense" component={ManageExpenses} options={{
+        presentation: 'modal'
+      }} />
+       <Stack.Screen name="DateWiseExpenses" component={DateWiseExpenses} options={{
         presentation: 'modal'
       }} />
     </Stack.Navigator>

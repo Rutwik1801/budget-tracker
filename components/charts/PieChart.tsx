@@ -7,8 +7,8 @@ const PieChartExample = () => {
   const series = [
     { value: 430, color: '#fbd203' },
     { value: 321, color: '#ffb300' },
-    { value: 185, color: '#ff9100' },
-    { value: 123, color: '#ff6c00' },
+    { value: 200, color: '#ff9100' },
+    { value: 2, color: '#ff6c00' },
   ]
 
   return (
