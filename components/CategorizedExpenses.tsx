@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native"
 export const CategorizedExpenses = ({ segregatedExpenses, totalAmount }) => {
 
   return <View style={{ padding: 8 }}>
-    <FlatList data={Object.entries(segregatedExpenses)} keyExtractor={(item) => item[0]} renderItem={(item) => (<CategorizedExpense values={item.item} totalAmount={totalAmount} />)} />
+    {Object.entries(segregatedExpenses).map(item => <CategorizedExpense key={item[0]} values={item} totalAmount={totalAmount} />)}
   </View>
 }
 
