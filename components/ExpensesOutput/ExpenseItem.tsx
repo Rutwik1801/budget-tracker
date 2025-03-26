@@ -24,8 +24,8 @@ export const ExpenseItem: React.FC<Expense> = ({ id, description, amount, date, 
           transactionType === "Income" && { color: "green" }
         ]}
         >{`$${amount}`}</Text>
-        <View style={{ flexDirection: "row", alignItems: "center", backgroundColor: GlobalStyles.colors.primary50, borderRadius: 3, paddingRight: 8 }}>
-          <IconButton icon={category.value} size={24} color={GlobalStyles.colors.primary800} onPress={() => { }} />
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", backgroundColor: GlobalStyles.colors.primary50, borderRadius: 3, paddingRight: 8, minWidth: 120 }}>
+          <IconButton icon={category.value} size={14} color={GlobalStyles.colors.primary800} onPress={() => { }} />
           <Text style={{ color: GlobalStyles.colors.primary800 }}>{category.label}</Text>
         </View>
       </View>
@@ -42,14 +42,14 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     backgroundColor: GlobalStyles.colors.primary800,
     borderColor: GlobalStyles.colors.primary400,
-    borderRadius: 3,
+    borderRadius: 8,
     elevation: 3,
   },
   detailsContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 15,
+    marginBottom: 2,
   },
   textBase: {
     color: GlobalStyles.colors.primary50,
@@ -64,10 +64,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     borderRadius: 4,
-    minWidth: 80
+    minWidth: 80,
+    height: 30
   },
   amount: {
     color: GlobalStyles.colors.error500,
-    fontSize: 25
+    fontSize: 20
   }
 })

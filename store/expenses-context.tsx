@@ -88,7 +88,8 @@ const dummyExpenses = [
     description: "Shoes",
     amount: 103.50,
     date: new Date('2025-12-25'),
-    category: {label: "Others", value: "airplane-outline"}
+    category: {label: "Others", value: "airplane-outline"},
+    transactioNType: "Income"
   },
   {
     id: 'e41',

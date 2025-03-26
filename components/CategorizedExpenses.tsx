@@ -25,7 +25,7 @@ export const CategorizedExpense = ({ values, totalAmount }) => {
 
       <View style={styles.iconContainer}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <IconButton icon={category.value} size={30} color="white" onPress={() => { }} />
+          <IconButton icon={category.value} size={20} color="white" onPress={() => { }} />
           <Text style={styles.categoryLabel}>{category.label}</Text>
         </View>
         <View style={{ alignItems: "center" }}>
@@ -38,10 +38,10 @@ export const CategorizedExpense = ({ values, totalAmount }) => {
 }
 
 const styles = StyleSheet.create({
-  categoryContainer: { backgroundColor: "#999", minHeight: 80, borderRadius: 4, marginBottom: 20 },
-  progressContainer: { position: "absolute", zIndex: 2, minHeight: 80, borderRadius: 8, backgroundColor: "black", height: 50 },
-  iconContainer: { position: "absolute", width: "100%", zIndex: 3, paddingRight: 16, minHeight: 80, flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
-  amount: { color: GlobalStyles.colors.error500, fontSize: 30 },
+  categoryContainer: { backgroundColor: "#999", minHeight: 50, borderRadius: 8, marginBottom: 20 },
+  progressContainer: { position: "absolute", zIndex: 2, minHeight: 50, borderRadius: 8, backgroundColor: "black", height: 50 },
+  iconContainer: { position: "absolute", width: "100%", zIndex: 3, paddingRight: 16, minHeight: 50, flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+  amount: { color: GlobalStyles.colors.error500, fontSize: 24 },
   percent: { color: GlobalStyles.colors.accent500 },
-  categoryLabel: { color: "white", fontSize: 20 }
+  categoryLabel: { color: "white", fontSize: 14 }
 })
