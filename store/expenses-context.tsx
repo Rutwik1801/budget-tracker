@@ -6,42 +6,48 @@ const dummyExpenses = [
     description: "Shoes",
     amount: 10.65,
     date: new Date('2025-03-19'),
-    category: {label: "Others", value: "airplane-outline"}
+    category: {label: "Others", value: "airplane-outline"},
+    transactionType: "Expense"
   },
   {
     id: 'e2',
     description: "Pant",
     amount: 14.35,
     date: new Date('2025-03-19'),
-    category: {label: "Others", value: "airplane-outline"}
+    category: {label: "Others", value: "airplane-outline"},
+    transactionType: "Expense"
   },
   {
     id: 'e3',
     description: "Shoes",
     amount: 103.50,
     date: new Date('2025-12-25'),
-    category: {label: "Others", value: "airplane-outline"}
+    category: {label: "Others", value: "airplane-outline"},
+    transactionType: "Income"
   },
   {
     id: 'e4',
     description: "Book",
     amount: 10.65,
     date: new Date('2021-12-19'),
-    category: {label: "Others", value: "airplane-outline"}
+    category: {label: "Others", value: "airplane-outline"},
+    transactionType: "Income"
   },
   {
     id: 'e11',
     description: "Shoes",
     amount: 10.65,
     date: new Date('2021-08-19'),
-    category: {label: "Others", value: "airplane-outline"}
+    category: {label: "Others", value: "airplane-outline"},
+    transactionType: "Income"
   },
   {
     id: 'e21',
     description: "Pant",
     amount: 14.35,
     date: new Date('2021-12-19'),
-    category: {label: "Others", value: "airplane-outline"}
+    category: {label: "Others", value: "airplane-outline"},
+    transactionType: "Income"
   },
   {
     id: 'e31',
@@ -55,35 +61,40 @@ const dummyExpenses = [
     description: "Book",
     amount: 10.65,
     date: new Date('2021-12-19'),
-    category: {label: "Others", value: "airplane-outline"}
+    category: {label: "Others", value: "airplane-outline"},
+    transactionType: "Income"
   },
   {
     id: 'e112',
     description: "Shoes",
     amount: 10.65,
     date: new Date('2021-08-19'),
-    category: {label: "Others", value: "airplane-outline"}
+    category: {label: "Others", value: "airplane-outline"},
+    transactionType: "Expense"
   },
   {
     id: 'e122',
     description: "Pant",
     amount: 14.35,
     date: new Date('2021-12-19'),
-    category: {label: "Others", value: "airplane-outline"}
+    category: {label: "Others", value: "airplane-outline"},
+    transactionType: "Expense"
   },
   {
     id: 'e132',
     description: "Shoes",
     amount: 103.50,
     date: new Date('2025-12-25'),
-    category: {label: "Others", value: "airplane-outline"}
+    category: {label: "Others", value: "airplane-outline"},
+    transactionType: "Expense"
   },
   {
     id: 'e142',
     description: "Book",
     amount: 10.65,
     date: new Date('2021-12-19'),
-    category: {label: "Others", value: "airplane-outline"}
+    category: {label: "Others", value: "airplane-outline"},
+    transactionType: "Expense"
   }
 ]
 
@@ -95,7 +106,8 @@ export type Expense = {
   category: {
     label: string,
     value: string
-  }
+  },
+  transactionType: "Expense" | "Income"
 }
 
 export type ExpensesContextState = {

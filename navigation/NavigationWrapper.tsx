@@ -19,7 +19,7 @@ const TopTabsNavigator = ({isRecentTab = true}) => {
   <TopTabs.Navigator screenOptions={{
     tabBarIndicatorStyle: {backgroundColor: "black"}
   }}>
-          <TopTabs.Screen name="Expenses" component={isRecentTab ? RecentExpenses : AllExpenses}  initialParams={{type: "Expenses"}} />
+          <TopTabs.Screen name="Expenses" component={isRecentTab ? RecentExpenses : AllExpenses}  initialParams={{type: "Expense"}} />
           <TopTabs.Screen name="Income" component={isRecentTab ? RecentExpenses : AllExpenses}  initialParams={{type: "Income"}}/>
           <TopTabs.Screen name="All" component={ isRecentTab ? RecentExpenses : AllExpenses}  initialParams={{type: "All"}}/>
   </TopTabs.Navigator>
@@ -46,11 +46,13 @@ export const ExpensesOverview = () => {
           title: "Analytics",
           tabBarLabel: "Analytics", tabBarIcon: ({ color, size }) => <Ionicons name="analytics" size={size} color={color} />
         }} />
-    <BottomTabs.Screen name="AllExpenses" component={() => <TopTabsNavigator isRecentTab={false} />}
+    <BottomTabs.Screen name="AllExpenses"
       options={{
         title: "All Expenses",
         tabBarLabel: "All", tabBarIcon: ({ color, size }) => <Ionicons name="calendar" size={size} color={color} />
-      }} />
+      }}>
+        {() => <TopTabsNavigator isRecentTab={false} />}
+      </BottomTabs.Screen>
   </BottomTabs.Navigator>);
 }
 

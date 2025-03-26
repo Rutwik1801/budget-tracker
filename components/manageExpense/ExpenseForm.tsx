@@ -30,7 +30,8 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit, onCancel, ed
     amount: { value: isEditing ? editedExpense?.amount : editedExpense?.amount, isValid: true },
     description: { value: editedExpense?.description, isValid: true },
     date: { value: isEditing ? editedExpense?.date : new Date(), isValid: true },
-    category: { value: isEditing ? editedExpense?.category : { label: "Others", value: "airplane-outline" }, isValid: true }
+    category: { value: isEditing ? editedExpense?.category : { label: "Others", value: "airplane-outline" }, isValid: true },
+    transactionType: {value: isEditing ? editedExpense?.transactionType : "Expense", isValid: true}
   })
 
 
@@ -43,7 +44,8 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit, onCancel, ed
         amount: { value: prev.amount.value, isValid: amountIsValid },
         description: { value: prev.description.value, isValid: descriptionIsValid },
         date: { value: prev.date.value, isValid: dateIsValid },
-        category: { value: prev.category.value, isValid: true }
+        category: { value: prev.category.value, isValid: true },
+        transactionType: {value: prev.transactionType.value, isValid: true}
       }))
       return;
     }
@@ -51,7 +53,8 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit, onCancel, ed
       amount: expense.amount.value,
       date: expense.date.value,
       description: expense.description.value,
-      category: expense.category.value
+      category: expense.category.value,
+      transactionType: expense.transactionType.value
     }
     onSubmit(expenseObject)
   }
@@ -75,6 +78,12 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit, onCancel, ed
       }}
         invalid={!expense.amount.isValid}
       />
+ </View>
+    <View>
+    <Text>Transaction type</Text>
+            <Button buttonContainerStyle={styles.button}  onPress={() => handleInputChange("transactionType", "Expense")} >Expense</Button>
+            <Button buttonContainerStyle={styles.button} onPress={() => handleInputChange("transactionType", "Income")} >Income</Button>
+   
     </View>
     <Text>Date</Text>
     <DateTimePicker

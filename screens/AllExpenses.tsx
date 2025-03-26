@@ -3,7 +3,11 @@ import { ExpensesOutput } from "../components/ExpensesOutput/ExpensesOutput"
 import { useContext } from "react"
 import { ExpensesContext } from "../store/expenses-context"
 
-export const AllExpenses = () => {
+export const AllExpenses = ({route}) => {
+  const {type} = route?.params
   const expensesCtx = useContext(ExpensesContext);
-  return <View style={{flex: 1}}><ExpensesOutput fallbackText="No Expenses Added" expenses={expensesCtx.expenses} expensesPeriod={"All"} /></View>
+    const filteredExpenses = expensesCtx.expenses.filter((expense) => {
+      return (type === "All" || type === expense.transactionType)
+    })
+  return <View style={{flex: 1}}><ExpensesOutput fallbackText="No Expenses Added" expenses={filteredExpenses} expensesPeriod={"All"} /></View>
 }
