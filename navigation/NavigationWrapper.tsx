@@ -9,6 +9,22 @@ import { Ionicons } from "@expo/vector-icons"
 import { IconButton } from "../components/UI/IconButton";
 import { Analytics } from "../screens/Analytics";
 import { DateWiseExpenses } from "../screens/DateWiseExpenses";
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
+
+const TopTabs = createMaterialTopTabNavigator();
+
+const TopTabsNavigator = ({isRecentTab = true}) => {
+  return (
+  <TopTabs.Navigator screenOptions={{
+    tabBarIndicatorStyle: {backgroundColor: "black"}
+  }}>
+          <TopTabs.Screen name="Expenses" component={isRecentTab ? RecentExpenses : AllExpenses}  initialParams={{type: "Expenses"}} />
+          <TopTabs.Screen name="Income" component={isRecentTab ? RecentExpenses : AllExpenses}  initialParams={{type: "Income"}}/>
+          <TopTabs.Screen name="All" component={ isRecentTab ? RecentExpenses : AllExpenses}  initialParams={{type: "All"}}/>
+  </TopTabs.Navigator>
+  );
+}
 
 export const ExpensesOverview = () => {
   const BottomTabs = createBottomTabNavigator();
@@ -20,7 +36,7 @@ export const ExpensesOverview = () => {
     tabBarInactiveTintColor: GlobalStyles.colors.primary50,
     headerRight: ({ tintColor }) => <IconButton icon="add" size={28} color={tintColor} onPress={() => { navigation.navigate("ManageExpense") }} />
   })}>
-    <BottomTabs.Screen name="RecentExpenses" component={RecentExpenses}
+    <BottomTabs.Screen name="RecentExpenses" component={TopTabsNavigator}
       options={{
         title: "Recent Expenses",
         tabBarLabel: "Recent", tabBarIcon: ({ color, size }) => <Ionicons name="hourglass" size={size} color={color} />
@@ -30,7 +46,7 @@ export const ExpensesOverview = () => {
           title: "Analytics",
           tabBarLabel: "Analytics", tabBarIcon: ({ color, size }) => <Ionicons name="analytics" size={size} color={color} />
         }} />
-    <BottomTabs.Screen name="AllExpenses" component={AllExpenses}
+    <BottomTabs.Screen name="AllExpenses" component={() => <TopTabsNavigator isRecentTab={false} />}
       options={{
         title: "All Expenses",
         tabBarLabel: "All", tabBarIcon: ({ color, size }) => <Ionicons name="calendar" size={size} color={color} />
