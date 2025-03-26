@@ -2,40 +2,8 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { IconButton } from "../UI/IconButton";
 import { useState } from "react";
 import { GlobalStyles } from "../../constants/styles";
+import { iconsList } from "../../store/expenses-context";
 
-const iconsList = [
-  { label: "Addition", value: "add-circle-outline" },
-  { label: "Travel", value: "airplane-outline" },
-  { label: "Alarm", value: "alarm-outline" },
-  { label: "Analytics", value: "analytics-outline" },
-  { label: "Basket", value: "basket-outline" },
-  { label: "Battery", value: "battery-full-outline" },
-  { label: "Book", value: "book-outline" },
-  { label: "Briefcase", value: "briefcase-outline" },
-  { label: "Brush", value: "brush-outline" },
-  { label: "Business", value: "business-outline" },
-  { label: "Calendar", value: "calendar-outline" },
-  { label: "Camera", value: "camera-outline" },
-  { label: "Car", value: "car-outline" },
-  { label: "Chat", value: "chatbubble-outline" },
-  { label: "Checkmark", value: "checkmark-circle-outline" },
-  { label: "Cloud", value: "cloud-outline" },
-  { label: "Compass", value: "compass-outline" },
-  { label: "Document", value: "document-text-outline" },
-  { label: "Download", value: "download-outline" },
-  { label: "Earth", value: "earth-outline" },
-  { label: "Fitness", value: "fitness-outline" },
-  { label: "Flag", value: "flag-outline" },
-  { label: "Folder", value: "folder-outline" },
-  { label: "Gift", value: "gift-outline" },
-  { label: "Globe", value: "globe-outline" },
-  { label: "Heart", value: "heart-outline" },
-  { label: "Home", value: "home-outline" },
-  { label: "Lock", value: "lock-closed-outline" },
-  { label: "Mail", value: "mail-outline" },
-  { label: "Settings", value: "settings-outline" },
-  { label: "Others", value: "code-working-outline" }
-];
 
 // Function to split the array into two equal parts (rows)
 const splitIntoRows = (array, numRows) => {

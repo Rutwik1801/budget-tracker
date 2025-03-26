@@ -1,5 +1,39 @@
 import { createContext, PropsWithChildren, useReducer } from "react";
 
+export const iconsList = [
+  { label: "Addition", value: "add-circle-outline" },
+  { label: "Travel", value: "airplane-outline" },
+  { label: "Alarm", value: "alarm-outline" },
+  { label: "Analytics", value: "analytics-outline" },
+  { label: "Basket", value: "basket-outline" },
+  { label: "Battery", value: "battery-full-outline" },
+  { label: "Book", value: "book-outline" },
+  { label: "Briefcase", value: "briefcase-outline" },
+  { label: "Brush", value: "brush-outline" },
+  { label: "Business", value: "business-outline" },
+  { label: "Calendar", value: "calendar-outline" },
+  { label: "Camera", value: "camera-outline" },
+  { label: "Car", value: "car-outline" },
+  { label: "Chat", value: "chatbubble-outline" },
+  { label: "Checkmark", value: "checkmark-circle-outline" },
+  { label: "Cloud", value: "cloud-outline" },
+  { label: "Compass", value: "compass-outline" },
+  { label: "Document", value: "document-text-outline" },
+  { label: "Download", value: "download-outline" },
+  { label: "Earth", value: "earth-outline" },
+  { label: "Fitness", value: "fitness-outline" },
+  { label: "Flag", value: "flag-outline" },
+  { label: "Folder", value: "folder-outline" },
+  { label: "Gift", value: "gift-outline" },
+  { label: "Globe", value: "globe-outline" },
+  { label: "Heart", value: "heart-outline" },
+  { label: "Home", value: "home-outline" },
+  { label: "Lock", value: "lock-closed-outline" },
+  { label: "Mail", value: "mail-outline" },
+  { label: "Settings", value: "settings-outline" },
+  { label: "Others", value: "code-working-outline" }
+];
+
 const dummyExpenses = [
   {
     id: 'e1',
@@ -14,7 +48,7 @@ const dummyExpenses = [
     description: "Pant",
     amount: 14.35,
     date: new Date('2025-03-19'),
-    category: {label: "Others", value: "airplane-outline"},
+    category: {label: "Briefcase", value: "briefcase-outline"},
     transactionType: "Expense"
   },
   {
@@ -22,7 +56,7 @@ const dummyExpenses = [
     description: "Shoes",
     amount: 103.50,
     date: new Date('2025-12-25'),
-    category: {label: "Others", value: "airplane-outline"},
+    category: {label: "Briefcase", value: "briefcase-outline"},
     transactionType: "Income"
   },
   {
@@ -38,7 +72,7 @@ const dummyExpenses = [
     description: "Shoes",
     amount: 10.65,
     date: new Date('2021-08-19'),
-    category: {label: "Others", value: "airplane-outline"},
+    category: {label: "Briefcase", value: "briefcase-outline"},
     transactionType: "Income"
   },
   {
