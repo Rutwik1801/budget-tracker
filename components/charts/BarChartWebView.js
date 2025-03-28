@@ -4,7 +4,6 @@ import { WebView } from "react-native-webview";
 import { getRandomDarkColor } from "../../utils/date";
 
 const BarChartWebView = ({ transactionTypes, transactionValues }) => {
-  console.log({transactionTypes, transactionValues})
   const webViewRef = useRef(null);
   const [isWebViewLoaded, setIsWebViewLoaded] = useState(false);
   const backCols = transactionTypes.map(() => getRandomDarkColor());

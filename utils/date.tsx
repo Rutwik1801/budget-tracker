@@ -1,4 +1,7 @@
 export const  getFormattedDate = (date: Date) => {
+  if(typeof date === "string") {
+    date = new Date(date)
+  }
   return date.toISOString().slice(0,10);
 }
 
@@ -14,3 +17,14 @@ export const getRandomDarkColor = () => {
   }
   return color;
 };
+
+export const getRecentExpenses = (allExpenses, type) => allExpenses.filter((expense) => {
+    const today = new Date();
+    const date7DaysAgo = getDateMinusDays(today, 7);
+    const expenseDate = new Date(expense.date)
+    return (expenseDate >= date7DaysAgo) && (expenseDate <= today)
+  }).filter(expense => (type === "All" || type === expense.transactionType))
+
+export const getTransactionFilteredExpenses = (allExpenses, type) => allExpenses.filter((expense) => 
+  (type === "All" || type === expense.transactionType)
+  )

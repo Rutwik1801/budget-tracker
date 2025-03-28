@@ -148,6 +148,7 @@ export type Expense = {
 export type ExpensesContextState = {
   expenses: Expense[],
   addExpense: (expense: Expense) => void,
+  setExpenses: (expenses: Expense[]) => void,
   deleteExpense: (id: string) => void,
   updateExpense: (id: string, expense: Expense) => void
 }
@@ -155,6 +156,7 @@ export type ExpensesContextState = {
 const initialExpensesState: ExpensesContextState = {
   expenses: [],
   addExpense: () => { },
+  setExpenses: () => {},
   deleteExpense: () => { },
   updateExpense: () => { }
 }
@@ -164,8 +166,9 @@ export const ExpensesContext = createContext(initialExpensesState);
 export const expensesReducer = (state, action) => {
   switch (action.type) {
     case 'ADD':
-      const id = new Date().toString() + Math.random().toString()
-      return [{ ...action.payload, id }, ...state]
+      return [action.payload, ...state]
+      case "SET":
+        return action.payload.reverse();
     case 'UPDATE':
       const updateExpenseIdx = state.findIndex(((expense: Expense) => expense.id === action.payload.expenseId))
       return state.map((expense: Expense, idx: number) =>
@@ -181,9 +184,12 @@ export const expensesReducer = (state, action) => {
 }
 
 export const ExpensesContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [expensesState, dispatch] = useReducer(expensesReducer, dummyExpenses);
+  const [expensesState, dispatch] = useReducer(expensesReducer, []);
   const addExpense = (expenseData: Expense) => {
     dispatch({ type: "ADD", payload: expenseData });
+  }
+  const setExpenses = (expenses: Expense[]) => {
+    dispatch({ type: "SET", payload: expenses });
   }
   const deleteExpense = (expenseId: string) => {
     dispatch({ type: "DELETE", payload: expenseId });
@@ -193,6 +199,7 @@ export const ExpensesContextProvider: React.FC<PropsWithChildren> = ({ children 
   }
   const value = {
     expenses: expensesState,
+    setExpenses,
     addExpense,
     deleteExpense,
     updateExpense

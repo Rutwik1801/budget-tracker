@@ -1,30 +1,39 @@
-import { useContext, useLayoutEffect } from "react"
+import { useContext, useLayoutEffect, useState } from "react"
 import { StyleSheet, View } from "react-native"
 import { GlobalStyles } from "../constants/styles"
 import { ExpensesContext } from "../store/expenses-context"
 import { ExpenseForm } from "../components/manageExpense/ExpenseForm"
+import { addExpense, deleteExpense, updateExpense } from "../utils/rest"
+import { LoadingOverlay } from "../components/UI/LoadingOverlay"
 
 export const ManageExpenses = ({route, navigation}) => {
+  const [isLoading, setIsLoading] = useState(false)
   const editedExpenseId = route.params?.expenseId
   const isEditing = !!editedExpenseId
       const expensesCtx = useContext(ExpensesContext)
 
-    const deleteExpenseHandler = () => {
+    const deleteExpenseHandler = async () => {
+      setIsLoading(true)
+     await deleteExpense(editedExpenseId)
       expensesCtx.deleteExpense(editedExpenseId)
+      setIsLoading(false)
       navigation.goBack();
     }
-    const confirmHandler = (expenseData: any) => {
+    const confirmHandler = async (expenseData: any) => {
+      setIsLoading(true)
       const expenseObject = {
         ...expenseData,
-        id: editedExpenseId ? editedExpenseId : Math.random().toString(),
         date: new Date(expenseData.date),
         amount: parseFloat(parseFloat(expenseData.amount).toFixed(2)),
       }
       if(isEditing) {
         expensesCtx.updateExpense(editedExpenseId, expenseObject)
+        await updateExpense(editedExpenseId, expenseObject);
       } else {
-        expensesCtx.addExpense(expenseObject)
+        const expenseId = await addExpense(expenseObject)
+        expensesCtx.addExpense({...expenseObject,id: expenseId.toString()})
       }
+      setIsLoading(false)
       navigation.goBack();
     }
     const cancelPressHandler = () => {
@@ -38,7 +47,9 @@ export const ManageExpenses = ({route, navigation}) => {
     })
   }, [navigation, isEditing])
 
-
+  if(isLoading) {
+    return <LoadingOverlay />
+  }
   return <View style={styles.container} >
     <ExpenseForm onSubmit={confirmHandler} onDelete={deleteExpenseHandler} onCancel={cancelPressHandler} editedExpenseId={editedExpenseId} />
       </View>

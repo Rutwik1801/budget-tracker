@@ -1,13 +1,22 @@
 import { View } from "react-native"
 import { ExpensesOutput } from "../components/ExpensesOutput/ExpensesOutput"
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import { ExpensesContext } from "../store/expenses-context"
+import { getAllExpenses } from "../utils/rest"
+import { LoadingOverlay } from "../components/UI/LoadingOverlay"
 
-export const AllExpenses = ({route}) => {
-  const {type} = route?.params
+export const AllExpenses = () => {
+  const [isLoading, setIsLoading] = useState(true)
   const expensesCtx = useContext(ExpensesContext);
-    const filteredExpenses = expensesCtx.expenses.filter((expense) => {
-      return (type === "All" || type === expense.transactionType)
-    })
-  return <View style={{flex: 1}}><ExpensesOutput fallbackText="No Expenses Added" expenses={filteredExpenses} expensesPeriod={"All"} /></View>
+    useEffect(() => {
+      const fetchData = async () => {
+        const expenses = await getAllExpenses();
+        expensesCtx.setExpenses(expenses)
+        setIsLoading(false)
+
+      }
+      fetchData();
+    }, [])
+    if(isLoading) return <LoadingOverlay />
+  return <View style={{flex: 1}}><ExpensesOutput fallbackText="No Expenses Added" expensesPeriod={"All"} /></View>
 }
