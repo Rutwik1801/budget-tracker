@@ -1,4 +1,5 @@
-import { createContext, PropsWithChildren, useReducer, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createContext, PropsWithChildren, useEffect, useReducer, useState } from "react";
 
 
 const initialAuthState = {
@@ -23,13 +24,25 @@ export const authReducer = (state, action) => {
 export const AuthContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [authState, dispatch] = useReducer(authReducer, {});
 
-  const logout = () => {
+  useEffect(() => {
+    const fetchToken = async () => {
+      const userData = await AsyncStorage.getItem('userData');
+      if(userData) {
+        dispatch({type: "LOGIN", payload: JSON.parse(userData)})
+      }
+    }
+    fetchToken();
+  }, [])
+  const logout = async () => {
+    await AsyncStorage.removeItem("userData")
     dispatch({ type: "LOGOUT" });
   }
-  const login = (userData) => {
+  const login = async (userData) => {
+    await AsyncStorage.setItem("userData", JSON.stringify(userData))
     dispatch({ type: "LOGIN", payload: userData });
   }
-  const signup = (userData) => {
+  const signup = async (userData) => {
+    await AsyncStorage.setItem("userData", JSON.stringify(userData))
     dispatch({ type: "SIGNUP", payload: userData });
   }
   const value = {

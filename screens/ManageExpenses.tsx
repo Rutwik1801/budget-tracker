@@ -6,8 +6,11 @@ import { ExpenseForm } from "../components/manageExpense/ExpenseForm"
 import { addExpense, deleteExpense, updateExpense } from "../utils/rest"
 import { LoadingOverlay } from "../components/UI/LoadingOverlay"
 import { ErrorOverlay } from "../components/UI/ErrorOverlay"
+import { AuthContext } from "../store/auth-context"
 
 export const ManageExpenses = ({route, navigation}) => {
+  const { authState } = useContext(AuthContext)
+  const {idToken, localId} = authState?.userCredentials
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState()
   const editedExpenseId = route.params?.expenseId
@@ -17,7 +20,7 @@ export const ManageExpenses = ({route, navigation}) => {
     const deleteExpenseHandler = async () => {
       setIsLoading(true)
       try {
-        await deleteExpense(editedExpenseId)
+        await deleteExpense(idToken, localId, editedExpenseId)
         expensesCtx.deleteExpense(editedExpenseId)
       } catch (err) {
         setError("Could not delete the expense")
@@ -35,9 +38,9 @@ export const ManageExpenses = ({route, navigation}) => {
       try {
         if(isEditing) {
           expensesCtx.updateExpense(editedExpenseId, expenseObject)
-          await updateExpense(editedExpenseId, expenseObject);
+          await updateExpense(idToken, localId, editedExpenseId, expenseObject);
         } else {
-          const expenseId = await addExpense(expenseObject)
+          const expenseId = await addExpense(idToken, localId, expenseObject)
           expensesCtx.addExpense({...expenseObject,id: expenseId.toString()})
         }
       } catch (err) {

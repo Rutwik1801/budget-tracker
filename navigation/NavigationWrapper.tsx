@@ -66,7 +66,8 @@ export const ExpensesOverview = () => {
 }
 
 export const NavigationWrapper = () => {
-  const {authState} = useContext(AuthContext);
+  const { authState } = useContext(AuthContext);
+
   return <NavigationContainer>
     {authState?.isLoggedIn ? <ExpensesStackNavigator /> : <AuthNavigator />}
   </NavigationContainer>
@@ -84,6 +85,8 @@ return <Stack.Navigator screenOptions={() => ({
 }
 
 export const ExpensesStackNavigator = () => {
+  const { authState } = useContext(AuthContext)
+  const {idToken, localId} = authState?.userCredentials
   const Stack = createNativeStackNavigator();
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState()
@@ -91,7 +94,7 @@ export const ExpensesStackNavigator = () => {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const expenses = await getAllExpenses();
+          const expenses = await getAllExpenses(idToken, localId);
           setExpenses(expenses)
         } catch (err) {
           setError("Could not fetch expenses")
