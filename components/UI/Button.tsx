@@ -5,7 +5,7 @@ import { PropsWithChildren } from "react"
 type ButtonProps = {
   onPress: () => void,
   mode?: "flat",
-  buttonContainerStyle: Object
+  buttonContainerStyle?: Object
 }
 export const Button:React.FC<PropsWithChildren<ButtonProps>> = ({ children, onPress, mode, buttonContainerStyle }) => {
   return <View style={buttonContainerStyle}>

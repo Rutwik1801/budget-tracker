@@ -14,6 +14,7 @@ import { useContext, useEffect, useState } from "react";
 import { LoadingOverlay } from "../components/UI/LoadingOverlay";
 import { ExpensesContext } from "../store/expenses-context";
 import { getAllExpenses } from "../utils/rest";
+import { ErrorOverlay } from "../components/UI/ErrorOverlay";
 
 
 const TopTabs = createMaterialTopTabNavigator();
@@ -63,15 +64,22 @@ export const ExpensesOverview = () => {
 export const NavigationWrapper = () => {
   const Stack = createNativeStackNavigator();
   const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState()
   const {setExpenses} = useContext(ExpensesContext);
     useEffect(() => {
       const fetchData = async () => {
-        const expenses = await getAllExpenses();
-        setExpenses(expenses)
+        try {
+          const expenses = await getAllExpenses();
+          setExpenses(expenses)
+        } catch (err) {
+          setError("Could not fetch expenses")
+        }
         setIsLoading(false)
       }
       fetchData();
     }, [])
+
+    if(error && !isLoading) return <ErrorOverlay message={error} onConfirm={() => setError(null)} />
     if(isLoading) return <LoadingOverlay />
   return <NavigationContainer>
     <Stack.Navigator screenOptions={({ navigation }) => ({
