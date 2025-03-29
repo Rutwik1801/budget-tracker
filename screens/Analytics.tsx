@@ -1,4 +1,4 @@
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useContext } from "react";
 import { ExpensesContext } from "../store/expenses-context";
 import { CategorizedExpenses } from "../components/CategorizedExpenses";
@@ -18,8 +18,7 @@ export const Analytics = () => {
           expenseCategories={Object.keys(expensePieChartData)} 
           expenseValues={Object.values(expensePieChartData)} 
         />
-        <Text>Category wise distribution</Text>
-
+        <Text style={styles.categoryText}>Category wise distribution</Text>
         <CategorizedExpenses segregatedExpenses={segregatedExpenses} totalAmount={totalAmount} />
 
         <BarChartWebView 
@@ -30,3 +29,11 @@ export const Analytics = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  categoryText: {
+    fontSize: 20,
+    textAlign: "center",
+    marginBottom: 8
+  }
+})

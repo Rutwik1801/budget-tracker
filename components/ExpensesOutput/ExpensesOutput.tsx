@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: GlobalStyles.colors.primary50,
+    backgroundColor: GlobalStyles.colors.primary100,
   },
   infoText: {
     color: GlobalStyles.colors.primary50,

@@ -16,61 +16,66 @@ export const CategorizedExpense = ({ values, totalAmount }) => {
   const amountPercentage = (total.toFixed(2) / totalAmount) * 100
   return (
     <Pressable onPress={() => navigation.navigate("DateWiseExpenses", {category: category})}>
-    <View key={category.value} style={styles.categoryContainer}>
+    <View key={category.value} style={styles.categorizedExpenseContainer}>
+      <View style={styles.iconContainer}>
+        <View style={styles.categoryContainer}>
+          <IconButton icon={category.value} size={25} background={GlobalStyles.colors.primaryGrey} color={GlobalStyles.colors.primary800} onPress={() => { }} />
+          <Text style={styles.categoryLabel}>{category.label}</Text>
+        </View>
+        <View style={styles.amountContainer}>
+          <Text style={styles.amount} >{`$${total.toFixed(2)}`}</Text>
+          <Text style={styles.percent}>{`-${amountPercentage.toFixed(2)}%`}</Text>
+        </View>
+      </View>
       <View
         style={[
           styles.progressContainer,
           { width: `${(total.toFixed(2) / totalAmount) * 100}%` },
         ]}></View>
-
-      <View style={styles.iconContainer}>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <IconButton icon={category.value} size={20} color="white" onPress={() => { }} />
-          <Text style={styles.categoryLabel}>{category.label}</Text>
-        </View>
-        <View style={{ alignItems: "center" }}>
-          <Text style={styles.amount} >{`$${total.toFixed(2)}`}</Text>
-          <Text style={styles.percent}>{`-${amountPercentage.toFixed(2)}%`}</Text>
-        </View>
-      </View>
     </View>
         </Pressable>)
 }
 
 const styles = StyleSheet.create({
-  categoryContainer: { 
-    backgroundColor: "#999",
+  categorizedExpenseContainer: { 
+    backgroundColor: GlobalStyles.colors.primary50,
     minHeight: 50,
-    borderRadius: 8,
-    marginBottom: 20
+    borderRadius: 14,
+    marginBottom: 20,
+    paddingTop:8,
+    elevation: 3
+  },
+  categoryContainer: {
+    flexDirection: "row",
+    alignItems: "center" 
   },
   progressContainer: {
-    position: "absolute",
-    zIndex: 2,
-    minHeight: 50,
-    borderRadius: 8,
-    backgroundColor: "black",
-    height: 50
+    marginTop: 5,
+    borderRadius: 14,
+    backgroundColor: GlobalStyles.colors.primary800,
+    height: 8,
+    borderTopLeftRadius: 0
+  },
+  amountContainer: {
+    alignItems: "center",
+    flexDirection: "row"
   },
   iconContainer: {
-    position: "absolute",
-    width: "100%",
-    zIndex: 3,
     paddingRight: 16,
-    minHeight: 50, 
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"
   },
   amount: {
     color: GlobalStyles.colors.error500,
-    fontSize: 24
+    fontSize: 24,
+    marginRight: 8
   },
   percent: {
-    color: GlobalStyles.colors.accent500
+    color: GlobalStyles.colors.primaryRed
   },
   categoryLabel: {
-    color: "white",
-    fontSize: 14
+    color: GlobalStyles.colors.primary800,
+    fontSize: 18
   }
 })

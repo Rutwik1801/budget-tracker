@@ -16,9 +16,9 @@ import { ExpensesContext } from "../store/expenses-context";
 import { getAllExpenses } from "../utils/rest";
 import { ErrorOverlay } from "../components/UI/ErrorOverlay";
 import { AuthContext } from "../store/auth-context";
-import { isLoaded } from "expo-font";
 import Signup from "../screens/Signup";
 import Login from "../screens/Login";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const TopTabs = createMaterialTopTabNavigator();
@@ -26,7 +26,7 @@ const TopTabs = createMaterialTopTabNavigator();
 export const TopTabsNavigator = ({isRecentTab = true}) => {
   return (
   <TopTabs.Navigator screenOptions={{
-    tabBarIndicatorStyle: {backgroundColor: "black"}
+    tabBarIndicatorStyle: {backgroundColor: GlobalStyles.colors.primary800}
   }}>
           <TopTabs.Screen name="Expenses" component={isRecentTab ? RecentExpenses : AllExpenses}  initialParams={{type: "Expense", isRecentTab}} />
           <TopTabs.Screen name="Income" component={isRecentTab ? RecentExpenses : AllExpenses}  initialParams={{type: "Income", isRecentTab}}/>
@@ -42,7 +42,7 @@ export const ExpensesOverview = () => {
     headerTintColor: GlobalStyles.colors.primary50,
     tabBarStyle: { backgroundColor: GlobalStyles.colors.primary800 },
     tabBarActiveTintColor: GlobalStyles.colors.accent500,
-    tabBarInactiveTintColor: GlobalStyles.colors.primary50,
+    tabBarInactiveTintColor: GlobalStyles.colors.primary500,
     headerRight: ({ tintColor }) => <IconButton icon="add" size={28} color={tintColor} onPress={() => { navigation.navigate("ManageExpense") }} />
   })}>
     <BottomTabs.Screen name="RecentExpenses" component={TopTabsNavigator}
@@ -91,6 +91,7 @@ export const ExpensesStackNavigator = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState()
   const {setExpenses} = useContext(ExpensesContext);
+  // AsyncStorage.removeItem("userData")
     useEffect(() => {
       const fetchData = async () => {
         try {

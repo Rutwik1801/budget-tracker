@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: GlobalStyles.colors.primary800,
     elevation: 2,
-    shadowColor: 'black',
+    shadowColor: GlobalStyles.colors.primary800,
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.35,
     shadowRadius: 4,

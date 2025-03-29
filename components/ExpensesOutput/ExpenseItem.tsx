@@ -19,21 +19,18 @@ export const ExpenseItem: React.FC<Expense> = ({ id, description, amount, date, 
     style={({ pressed }) => pressed && styles.pressed}
   >
     <View style={styles.expenseItem}>
+      <View style={{flexDirection:"row", alignItems:"center"}}>
+    <IconButton icon={category.value} size={30} background="#eee" color={GlobalStyles.colors.primary800} onPress={() => { }} />
       <View style={styles.detailsContainer}>
         <Text style={styles.textBase} >{description}</Text>
-        <Text style={styles.textBase}>{getFormattedDate(date)}</Text>
+        <Text style={{color: GlobalStyles.colors.primary400, marginTop: 4}}>{getFormattedDate(date)}</Text>
       </View>
-      <View style={styles.amountContainer}>
+      </View>
         <Text style={[
           styles.amount,
-          transactionType === "Income" && { color: "green" }
+          transactionType === "Income" && { color: GlobalStyles.colors.primaryGreen }
         ]}
-        >{getCurrencyFormattedText(amount, currency)}</Text>
-        <View style={styles.categoryContainer}>
-          <IconButton icon={category.value} size={14} color={GlobalStyles.colors.primary800} onPress={() => { }} />
-          <Text style={styles.categoryText}>{category.label}</Text>
-        </View>
-      </View>
+        >{`${transactionType === "Income" ? "+" : "-"}${getCurrencyFormattedText(amount, currency)}`}</Text>
     </View>
   </Pressable>
 }
@@ -43,39 +40,32 @@ const styles = StyleSheet.create({
     opacity: 0.75,
   },
   expenseItem: {
-    padding: 12,
+    flexDirection:"row",
+    justifyContent:"space-between",
+    alignItems:"center",
+    paddingVertical: 12,
+    paddingHorizontal: 14,
     marginVertical: 8,
-    backgroundColor: GlobalStyles.colors.primary800,
+    backgroundColor: GlobalStyles.colors.primary50,
     borderColor: GlobalStyles.colors.primary400,
-    borderRadius: 8,
+    borderRadius: 12,
     elevation: 3,
   },
   detailsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 2,
+    marginLeft: 4
   },
   textBase: {
-    color: GlobalStyles.colors.primary50,
+    color: GlobalStyles.colors.primary800,
+    fontSize: 20
   },
   description: {
     fontSize: 16,
     marginBottom: 4,
     fontWeight: 'bold'
   },
-  amountContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    borderRadius: 4,
-    minWidth: 80,
-    height: 30
-  },
   amount: {
     color: GlobalStyles.colors.error500,
     fontSize: 20
   },
   categoryText: { color: GlobalStyles.colors.primary800 },
-  categoryContainer: { flexDirection: "row", alignItems: "center", justifyContent: "center", backgroundColor: GlobalStyles.colors.primary50, borderRadius: 3, paddingRight: 8, minWidth: 120 }
 })

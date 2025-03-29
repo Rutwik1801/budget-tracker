@@ -14,28 +14,32 @@ export const ExpensesSummary: React.FC<{ periodName: string, expenses: Expense[]
 
   return <View style={styles.container}>
     <Text style={styles.period} >{periodName}</Text>
-    <Text style={[styles.sum, { color: (expensesSum < 0 || type === "Expense") ? "red" : "green" }]}
-    >{getCurrencyFormattedText(expensesSum, currency)}</Text>
+    <Text style={[styles.sum, { color: (expensesSum < 0 || type === "Expense") ? GlobalStyles.colors.primaryRed : GlobalStyles.colors.primaryGreen }]}
+    >{`${expensesSum >=0 ? "+" : "-"}${getCurrencyFormattedText(expensesSum, currency)}`}</Text>
   </View>
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 8,
-    backgroundColor: GlobalStyles.colors.primary800,
-    borderRadius: 6,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    minHeight: 50,
-    marginBottom: 4
+    padding: 18,
+    paddingHorizontal: 24,
+    minWidth:200,
+    alignItems:"center",
+    backgroundColor: GlobalStyles.colors.primary50,
+    borderRadius: 10,
+    borderTopLeftRadius: 40,
+    borderBottomRightRadius: 40,
+    alignSelf:"center",
+    marginBottom: 4,
   },
   period: {
     fontSize: 16,
-    color: GlobalStyles.colors.primary50,
+    fontWeight:"bold",
+    color: GlobalStyles.colors.primary800,
+    marginBottom: 8
   },
   sum: {
-    fontSize: 28,
+    fontSize: 32,
     color: GlobalStyles.colors.primary50
   }
 })

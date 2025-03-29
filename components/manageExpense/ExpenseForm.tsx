@@ -34,7 +34,6 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit, onCancel, ed
     transactionType: {value: isEditing ? editedExpense?.transactionType : "Expense", isValid: true}
   })
 
-
   const handleSubmit = () => {
     const amountIsValid = !isNaN(expense?.amount.value as number) && (expense?.amount.value as number) > 0;
     const dateIsValid = new Date((expense?.date.value) as Date).toString() !== "Invalid Date";
@@ -74,7 +73,7 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit, onCancel, ed
       <Input style={styles.rowInput} label="Amount" textInputConfig={{
         keyboardType: "decimal-pad",
         onChangeText: handleInputChange.bind(this, "amount"),
-        value: expense.amount.value 
+        value: expense.amount.value?.toString() 
       }}
         invalid={!expense.amount.isValid}
       />

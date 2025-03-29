@@ -5,7 +5,7 @@ import axios from "axios"
 // const LOGIN_URL = ""
 
 export const addExpense = async (token, userId, expenseData) => {
-const res = axios.post(`${BACKEND_URL}/expenses/${userId}.json?auth=${token}`, expenseData);
+const res = axios.post(`${BACKEND_URL}/${userId}.json?auth=${token}`, expenseData);
 const id = (await res).data.name;
 return id;
 }

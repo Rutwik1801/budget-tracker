@@ -1,10 +1,11 @@
 import { Expense, Category } from "./types";
 
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
 export const  getFormattedDate = (date: Date) => {
   if(typeof date === "string") {
     date = new Date(date)
   }
-  return date.toISOString().slice(0,10);
+  return `${date.getDate()} ${months[date.getMonth()]}, ${date.getFullYear()}`
 }
 
 export const getDateMinusDays = (date: Date, days: number) => {
