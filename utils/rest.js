@@ -1,6 +1,8 @@
 import axios from "axios"
 
 // const BACKEND_URL = ""
+// const SIGNUP_URL = ""
+// const LOGIN_URL = ""
 
 export const addExpense = async (expenseData) => {
 const res = axios.post(`${BACKEND_URL}/expenses.json`, expenseData);
@@ -27,4 +29,23 @@ export const getAllExpenses = async () => {
     expenses.push(expenseObj)
   }
   return expenses;
+}
+
+export const createUser = async (email, password) => {
+    const res = await axios.post(SIGNUP_URL, {
+        email,
+        password,
+        returnSecureToken: true
+    });
+    return res.data;
+}
+
+
+export const loginUser = async (email, password) => {
+  const res = await axios.post(LOGIN_URL, {
+    email,
+    password,
+    returnSecureToken: true
+});
+return res.data;
 }

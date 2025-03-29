@@ -15,11 +15,15 @@ import { LoadingOverlay } from "../components/UI/LoadingOverlay";
 import { ExpensesContext } from "../store/expenses-context";
 import { getAllExpenses } from "../utils/rest";
 import { ErrorOverlay } from "../components/UI/ErrorOverlay";
+import { AuthContext } from "../store/auth-context";
+import { isLoaded } from "expo-font";
+import Signup from "../screens/Signup";
+import Login from "../screens/Login";
 
 
 const TopTabs = createMaterialTopTabNavigator();
 
-const TopTabsNavigator = ({isRecentTab = true}) => {
+export const TopTabsNavigator = ({isRecentTab = true}) => {
   return (
   <TopTabs.Navigator screenOptions={{
     tabBarIndicatorStyle: {backgroundColor: "black"}
@@ -62,6 +66,24 @@ export const ExpensesOverview = () => {
 }
 
 export const NavigationWrapper = () => {
+  const {authState} = useContext(AuthContext);
+  return <NavigationContainer>
+    {authState?.isLoggedIn ? <ExpensesStackNavigator /> : <AuthNavigator />}
+  </NavigationContainer>
+}
+
+export const AuthNavigator = () => {
+  const Stack = createNativeStackNavigator();
+return <Stack.Navigator screenOptions={() => ({
+      headerStyle: { backgroundColor: GlobalStyles.colors.primary800 },
+      headerTintColor: GlobalStyles.colors.primary50,
+    })}>
+      <Stack.Screen name="Signup" component={Signup} />
+      <Stack.Screen name="Login" component={Login}  />
+    </Stack.Navigator>
+}
+
+export const ExpensesStackNavigator = () => {
   const Stack = createNativeStackNavigator();
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState()
@@ -81,8 +103,7 @@ export const NavigationWrapper = () => {
 
     if(error && !isLoading) return <ErrorOverlay message={error} onConfirm={() => setError(null)} />
     if(isLoading) return <LoadingOverlay />
-  return <NavigationContainer>
-    <Stack.Navigator screenOptions={({ navigation }) => ({
+  return <Stack.Navigator screenOptions={() => ({
       headerStyle: { backgroundColor: GlobalStyles.colors.primary800 },
       headerTintColor: GlobalStyles.colors.primary50,
     })}>
@@ -94,5 +115,4 @@ export const NavigationWrapper = () => {
         presentation: 'modal'
       }} />
     </Stack.Navigator>
-  </NavigationContainer>
 }
