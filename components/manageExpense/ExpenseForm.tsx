@@ -50,7 +50,7 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit, onCancel, ed
       return;
     }
     const expenseObject = {
-      amount: expense.amount.value,
+      amount: parseFloat(expense.amount.value)?.toFixed(2),
       date: expense.date.value,
       description: expense.description.value,
       category: expense.category.value,
@@ -74,7 +74,7 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit, onCancel, ed
       <Input style={styles.rowInput} label="Amount" textInputConfig={{
         keyboardType: "decimal-pad",
         onChangeText: handleInputChange.bind(this, "amount"),
-        value: expense.amount.value ? parseFloat(expense.amount.value).toFixed(2) : expense.amount.value 
+        value: expense.amount.value 
       }}
         invalid={!expense.amount.isValid}
       />

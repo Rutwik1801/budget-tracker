@@ -1,15 +1,20 @@
 import { Pressable, StyleSheet, Text, View } from "react-native"
 import { GlobalStyles } from "../../constants/styles"
-import { getFormattedDate } from "../../utils/date"
+import { getCurrencyFormattedText, getFormattedDate } from "../../utils/utilFunctions"
 import { useNavigation } from "@react-navigation/native"
-import { Expense } from "../../store/expenses-context"
 import { IconButton } from "../UI/IconButton"
+import { Expense } from "../../utils/types"
+import { useContext } from "react"
+import { ExpensesContext } from "../../store/expenses-context"
 
 export const ExpenseItem: React.FC<Expense> = ({ id, description, amount, date, category, transactionType }) => {
   const navigation = useNavigation()
+  const { currency } = useContext(ExpensesContext)
+
   const expensePressHandler = () => {
     navigation.navigate("ManageExpense", { expenseId: id })
   }
+
   return <Pressable onPress={expensePressHandler}
     style={({ pressed }) => pressed && styles.pressed}
   >
@@ -23,10 +28,10 @@ export const ExpenseItem: React.FC<Expense> = ({ id, description, amount, date, 
           styles.amount,
           transactionType === "Income" && { color: "green" }
         ]}
-        >{`$${amount}`}</Text>
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", backgroundColor: GlobalStyles.colors.primary50, borderRadius: 3, paddingRight: 8, minWidth: 120 }}>
+        >{getCurrencyFormattedText(amount, currency)}</Text>
+        <View style={styles.categoryContainer}>
           <IconButton icon={category.value} size={14} color={GlobalStyles.colors.primary800} onPress={() => { }} />
-          <Text style={{ color: GlobalStyles.colors.primary800 }}>{category.label}</Text>
+          <Text style={styles.categoryText}>{category.label}</Text>
         </View>
       </View>
     </View>
@@ -70,5 +75,7 @@ const styles = StyleSheet.create({
   amount: {
     color: GlobalStyles.colors.error500,
     fontSize: 20
-  }
+  },
+  categoryText: { color: GlobalStyles.colors.primary800 },
+  categoryContainer: { flexDirection: "row", alignItems: "center", justifyContent: "center", backgroundColor: GlobalStyles.colors.primary50, borderRadius: 3, paddingRight: 8, minWidth: 120 }
 })

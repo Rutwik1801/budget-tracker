@@ -10,6 +10,10 @@ import { IconButton } from "../components/UI/IconButton";
 import { Analytics } from "../screens/Analytics";
 import { DateWiseExpenses } from "../screens/DateWiseExpenses";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { useContext, useEffect, useState } from "react";
+import { LoadingOverlay } from "../components/UI/LoadingOverlay";
+import { ExpensesContext } from "../store/expenses-context";
+import { getAllExpenses } from "../utils/rest";
 
 
 const TopTabs = createMaterialTopTabNavigator();
@@ -19,9 +23,9 @@ const TopTabsNavigator = ({isRecentTab = true}) => {
   <TopTabs.Navigator screenOptions={{
     tabBarIndicatorStyle: {backgroundColor: "black"}
   }}>
-          <TopTabs.Screen name="Expenses" component={isRecentTab ? RecentExpenses : AllExpenses}  initialParams={{type: "Expense"}} />
-          <TopTabs.Screen name="Income" component={isRecentTab ? RecentExpenses : AllExpenses}  initialParams={{type: "Income"}}/>
-          <TopTabs.Screen name="All" component={ isRecentTab ? RecentExpenses : AllExpenses}  initialParams={{type: "All"}}/>
+          <TopTabs.Screen name="Expenses" component={isRecentTab ? RecentExpenses : AllExpenses}  initialParams={{type: "Expense", isRecentTab}} />
+          <TopTabs.Screen name="Income" component={isRecentTab ? RecentExpenses : AllExpenses}  initialParams={{type: "Income", isRecentTab}}/>
+          <TopTabs.Screen name="All" component={ isRecentTab ? RecentExpenses : AllExpenses}  initialParams={{type: "All", isRecentTab}}/>
   </TopTabs.Navigator>
   );
 }
@@ -58,7 +62,17 @@ export const ExpensesOverview = () => {
 
 export const NavigationWrapper = () => {
   const Stack = createNativeStackNavigator();
-
+  const [isLoading, setIsLoading] = useState(true)
+  const {setExpenses} = useContext(ExpensesContext);
+    useEffect(() => {
+      const fetchData = async () => {
+        const expenses = await getAllExpenses();
+        setExpenses(expenses)
+        setIsLoading(false)
+      }
+      fetchData();
+    }, [])
+    if(isLoading) return <LoadingOverlay />
   return <NavigationContainer>
     <Stack.Navigator screenOptions={({ navigation }) => ({
       headerStyle: { backgroundColor: GlobalStyles.colors.primary800 },

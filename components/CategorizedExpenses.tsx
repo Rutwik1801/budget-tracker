@@ -1,4 +1,4 @@
-import { FlatList, Pressable, ScrollView, StyleSheet, Text, View } from "react-native"
+import { Pressable, StyleSheet, Text, View } from "react-native"
 import { GlobalStyles } from "../constants/styles"
 import { IconButton } from "./UI/IconButton"
 import { useNavigation } from "@react-navigation/native"
@@ -38,10 +38,39 @@ export const CategorizedExpense = ({ values, totalAmount }) => {
 }
 
 const styles = StyleSheet.create({
-  categoryContainer: { backgroundColor: "#999", minHeight: 50, borderRadius: 8, marginBottom: 20 },
-  progressContainer: { position: "absolute", zIndex: 2, minHeight: 50, borderRadius: 8, backgroundColor: "black", height: 50 },
-  iconContainer: { position: "absolute", width: "100%", zIndex: 3, paddingRight: 16, minHeight: 50, flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
-  amount: { color: GlobalStyles.colors.error500, fontSize: 24 },
-  percent: { color: GlobalStyles.colors.accent500 },
-  categoryLabel: { color: "white", fontSize: 14 }
+  categoryContainer: { 
+    backgroundColor: "#999",
+    minHeight: 50,
+    borderRadius: 8,
+    marginBottom: 20
+  },
+  progressContainer: {
+    position: "absolute",
+    zIndex: 2,
+    minHeight: 50,
+    borderRadius: 8,
+    backgroundColor: "black",
+    height: 50
+  },
+  iconContainer: {
+    position: "absolute",
+    width: "100%",
+    zIndex: 3,
+    paddingRight: 16,
+    minHeight: 50, 
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+  amount: {
+    color: GlobalStyles.colors.error500,
+    fontSize: 24
+  },
+  percent: {
+    color: GlobalStyles.colors.accent500
+  },
+  categoryLabel: {
+    color: "white",
+    fontSize: 14
+  }
 })

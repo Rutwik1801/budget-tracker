@@ -1,21 +1,21 @@
 import { StyleSheet, Text, View } from "react-native"
 import { GlobalStyles } from "../../constants/styles"
-import { Expense } from "../../store/expenses-context";
 import { useRoute } from "@react-navigation/native";
+import { getCurrencyFormattedText, getExpenseSum } from "../../utils/utilFunctions";
+import { Expense } from "../../utils/types";
+import { useContext } from "react";
+import { ExpensesContext } from "../../store/expenses-context";
 
 export const ExpensesSummary: React.FC<{ periodName: string, expenses: Expense[] }> = ({ periodName, expenses }) => {
   const route = useRoute();
   const { type } = route?.params
-  const expensesSum = expenses.reduce((sum: number, expense: Expense) => {
-    if (type === "All") {
-      return expense.transactionType === "Expense" ? sum - expense.amount : sum + expense.amount
-    }
-    return sum + (expense.amount ?? 0)
-  }, 0);
+  const { currency } = useContext(ExpensesContext)
+  const expensesSum = getExpenseSum(expenses, type)
+
   return <View style={styles.container}>
     <Text style={styles.period} >{periodName}</Text>
     <Text style={[styles.sum, { color: (expensesSum < 0 || type === "Expense") ? "red" : "green" }]}
-    >{`$${expensesSum?.toFixed(2)}`}</Text>
+    >{getCurrencyFormattedText(expensesSum, currency)}</Text>
   </View>
 }
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import { WebView } from "react-native-webview";
-import { getRandomDarkColor } from "../../utils/date";
+import { getRandomDarkColor } from "../../utils/utilFunctions";
 
 const BarChartWebView = ({ transactionTypes, transactionValues }) => {
   const webViewRef = useRef(null);
@@ -17,70 +17,86 @@ const BarChartWebView = ({ transactionTypes, transactionValues }) => {
   }, [isWebViewLoaded, transactionTypes, transactionValues]);
 
   const htmlContent = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      <style>
-        body {
-          background-color: transparent;
-          margin: 0; padding: 0;
-          display: flex; justify-content: center; align-items: center;
-          height: 100vh;
-        }
-        canvas {
-          width: 90vw !important;
-          height: 90vh !important;
-        }
-      </style>
-    </head>
-    <body>
-      <canvas id="transactionBarChart"></canvas>
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        background-color: transparent;
+        margin: 0; padding: 0;
+        display: flex; justify-content: center; align-items: center;
+        height: 100vh;
+      }
+      canvas {
+        width: 90vw !important;
+        height: 90vh !important;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="transactionBarChart"></canvas>
 
-      <script>
-        let transactionChart;
+    <script>
+      let transactionChart;
 
-        function updateChart(data) {
-          if (!transactionChart) {
-            var ctx = document.getElementById('transactionBarChart').getContext('2d');
-            transactionChart = new Chart(ctx, {
-              type: 'bar',
-              data: {
-                labels: data.transactionTypes,
-                datasets: [{
-                  label: 'Transactions',
-                  data: data.transactionValues,
-                  backgroundColor: data.backCols,
-                  hoverOffset: 4
-                }]
+      function updateChart(data) {
+        if (!transactionChart) {
+          var ctx = document.getElementById('transactionBarChart').getContext('2d');
+          transactionChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.transactionTypes,
+              datasets: [{
+                label: 'Transactions',
+                data: data.transactionValues,
+                backgroundColor: data.backCols,
+                barThickness: 60, // Reduce bar width
+                hoverOffset: 4
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                x: {
+                  ticks: { font: { size: 30 } } // Increase X-axis label size
+                },
+                y: {
+                  ticks: { font: { size: 20 } } // Increase Y-axis label size
+                }
               },
-              options: {
-                responsive: true,
-                maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  labels: { font: { size: 22 } } // Increase legend text size
+                }
               }
-            });
-          } else {
-            transactionChart.data.labels = data.transactionTypes;
-            transactionChart.data.datasets[0].data = data.transactionValues;
-            transactionChart.data.datasets[0].backgroundColor = data.backCols;
-            transactionChart.update();
-          }
+            }
+          });
+        } else {
+          transactionChart.data.labels = data.transactionTypes;
+          transactionChart.data.datasets[0].data = data.transactionValues;
+          transactionChart.data.datasets[0].backgroundColor = data.backCols;
+          transactionChart.update();
         }
+      }
 
-        window.addEventListener('message', function(event) {
-          try {
-            var data = JSON.parse(event.data);
-            updateChart(data);
-          } catch (error) {
-            window.ReactNativeWebView.postMessage("Error parsing message: " + error.message);
-          }
-        });
+      window.addEventListener('message', function(event) {
+        try {
+          var data = JSON.parse(event.data);
+          updateChart(data);
+        } catch (error) {
+          window.ReactNativeWebView.postMessage("Error parsing message: " + error.message);
+        }
+      });
 
-        window.ReactNativeWebView.postMessage("WebView Loaded");
-      </script>
-    </body>
-    </html>
-  `;
+      window.ReactNativeWebView.postMessage("WebView Loaded");
+    </script>
+  </body>
+  </html>
+`;
+
+
 
   return (
     <View style={{ minHeight: 300, backgroundColor: "transparent", padding: 20, marginBottom: 30 }}>

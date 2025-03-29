@@ -1,4 +1,5 @@
-import { createContext, PropsWithChildren, useReducer } from "react";
+import { createContext, PropsWithChildren, useReducer, useState } from "react";
+import { Expense, ExpensesContextState } from "../utils/types";
 
 export const iconsList = [
   { label: "Addition", value: "add-circle-outline" },
@@ -34,131 +35,112 @@ export const iconsList = [
   { label: "Others", value: "code-working-outline" }
 ];
 
-const dummyExpenses = [
-  {
-    id: 'e1',
-    description: "Shoes",
-    amount: 10.65,
-    date: new Date('2025-03-19'),
-    category: {label: "Others", value: "airplane-outline"},
-    transactionType: "Expense"
-  },
-  {
-    id: 'e2',
-    description: "Pant",
-    amount: 14.35,
-    date: new Date('2025-03-19'),
-    category: {label: "Briefcase", value: "briefcase-outline"},
-    transactionType: "Expense"
-  },
-  {
-    id: 'e3',
-    description: "Shoes",
-    amount: 103.50,
-    date: new Date('2025-12-25'),
-    category: {label: "Briefcase", value: "briefcase-outline"},
-    transactionType: "Income"
-  },
-  {
-    id: 'e4',
-    description: "Book",
-    amount: 10.65,
-    date: new Date('2021-12-19'),
-    category: {label: "Others", value: "airplane-outline"},
-    transactionType: "Income"
-  },
-  {
-    id: 'e11',
-    description: "Shoes",
-    amount: 10.65,
-    date: new Date('2021-08-19'),
-    category: {label: "Briefcase", value: "briefcase-outline"},
-    transactionType: "Income"
-  },
-  {
-    id: 'e21',
-    description: "Pant",
-    amount: 14.35,
-    date: new Date('2021-12-19'),
-    category: {label: "Others", value: "airplane-outline"},
-    transactionType: "Income"
-  },
-  {
-    id: 'e31',
-    description: "Shoes",
-    amount: 103.50,
-    date: new Date('2025-12-25'),
-    category: {label: "Others", value: "airplane-outline"},
-    transactioNType: "Income"
-  },
-  {
-    id: 'e41',
-    description: "Book",
-    amount: 10.65,
-    date: new Date('2021-12-19'),
-    category: {label: "Others", value: "airplane-outline"},
-    transactionType: "Income"
-  },
-  {
-    id: 'e112',
-    description: "Shoes",
-    amount: 10.65,
-    date: new Date('2021-08-19'),
-    category: {label: "Others", value: "airplane-outline"},
-    transactionType: "Expense"
-  },
-  {
-    id: 'e122',
-    description: "Pant",
-    amount: 14.35,
-    date: new Date('2021-12-19'),
-    category: {label: "Others", value: "airplane-outline"},
-    transactionType: "Expense"
-  },
-  {
-    id: 'e132',
-    description: "Shoes",
-    amount: 103.50,
-    date: new Date('2025-12-25'),
-    category: {label: "Others", value: "airplane-outline"},
-    transactionType: "Expense"
-  },
-  {
-    id: 'e142',
-    description: "Book",
-    amount: 10.65,
-    date: new Date('2021-12-19'),
-    category: {label: "Others", value: "airplane-outline"},
-    transactionType: "Expense"
-  }
-]
-
-export type Expense = {
-  id: string,
-  description: string,
-  amount: number,
-  date: Date,
-  category: {
-    label: string,
-    value: string
-  },
-  transactionType: "Expense" | "Income"
-}
-
-export type ExpensesContextState = {
-  expenses: Expense[],
-  addExpense: (expense: Expense) => void,
-  setExpenses: (expenses: Expense[]) => void,
-  deleteExpense: (id: string) => void,
-  updateExpense: (id: string, expense: Expense) => void
-}
+// const dummyExpenses = [
+//   {
+//     id: 'e1',
+//     description: "Shoes",
+//     amount: 10.65,
+//     date: new Date('2025-03-19'),
+//     category: {label: "Others", value: "airplane-outline"},
+//     transactionType: "Expense"
+//   },
+//   {
+//     id: 'e2',
+//     description: "Pant",
+//     amount: 14.35,
+//     date: new Date('2025-03-19'),
+//     category: {label: "Briefcase", value: "briefcase-outline"},
+//     transactionType: "Expense"
+//   },
+//   {
+//     id: 'e3',
+//     description: "Shoes",
+//     amount: 103.50,
+//     date: new Date('2025-12-25'),
+//     category: {label: "Briefcase", value: "briefcase-outline"},
+//     transactionType: "Income"
+//   },
+//   {
+//     id: 'e4',
+//     description: "Book",
+//     amount: 10.65,
+//     date: new Date('2021-12-19'),
+//     category: {label: "Others", value: "airplane-outline"},
+//     transactionType: "Income"
+//   },
+//   {
+//     id: 'e11',
+//     description: "Shoes",
+//     amount: 10.65,
+//     date: new Date('2021-08-19'),
+//     category: {label: "Briefcase", value: "briefcase-outline"},
+//     transactionType: "Income"
+//   },
+//   {
+//     id: 'e21',
+//     description: "Pant",
+//     amount: 14.35,
+//     date: new Date('2021-12-19'),
+//     category: {label: "Others", value: "airplane-outline"},
+//     transactionType: "Income"
+//   },
+//   {
+//     id: 'e31',
+//     description: "Shoes",
+//     amount: 103.50,
+//     date: new Date('2025-12-25'),
+//     category: {label: "Others", value: "airplane-outline"},
+//     transactioNType: "Income"
+//   },
+//   {
+//     id: 'e41',
+//     description: "Book",
+//     amount: 10.65,
+//     date: new Date('2021-12-19'),
+//     category: {label: "Others", value: "airplane-outline"},
+//     transactionType: "Income"
+//   },
+//   {
+//     id: 'e112',
+//     description: "Shoes",
+//     amount: 10.65,
+//     date: new Date('2021-08-19'),
+//     category: {label: "Others", value: "airplane-outline"},
+//     transactionType: "Expense"
+//   },
+//   {
+//     id: 'e122',
+//     description: "Pant",
+//     amount: 14.35,
+//     date: new Date('2021-12-19'),
+//     category: {label: "Others", value: "airplane-outline"},
+//     transactionType: "Expense"
+//   },
+//   {
+//     id: 'e132',
+//     description: "Shoes",
+//     amount: 103.50,
+//     date: new Date('2025-12-25'),
+//     category: {label: "Others", value: "airplane-outline"},
+//     transactionType: "Expense"
+//   },
+//   {
+//     id: 'e142',
+//     description: "Book",
+//     amount: 10.65,
+//     date: new Date('2021-12-19'),
+//     category: {label: "Others", value: "airplane-outline"},
+//     transactionType: "Expense"
+//   }
+// ]
 
 const initialExpensesState: ExpensesContextState = {
   expenses: [],
   addExpense: () => { },
   setExpenses: () => {},
   deleteExpense: () => { },
-  updateExpense: () => { }
+  updateExpense: () => { },
+  currency: "USD"
 }
 
 export const ExpensesContext = createContext(initialExpensesState);
@@ -185,6 +167,7 @@ export const expensesReducer = (state, action) => {
 
 export const ExpensesContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [expensesState, dispatch] = useReducer(expensesReducer, []);
+  const [currency, setCurrency] = useState("USD")
   const addExpense = (expenseData: Expense) => {
     dispatch({ type: "ADD", payload: expenseData });
   }
@@ -202,7 +185,8 @@ export const ExpensesContextProvider: React.FC<PropsWithChildren> = ({ children 
     setExpenses,
     addExpense,
     deleteExpense,
-    updateExpense
+    updateExpense,
+    currency
   }
   return <ExpensesContext.Provider value={value}>{children}</ExpensesContext.Provider>
 }

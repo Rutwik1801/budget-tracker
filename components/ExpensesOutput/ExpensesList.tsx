@@ -1,6 +1,6 @@
 import { FlatList, View } from "react-native"
 import { ExpenseItem } from "./ExpenseItem"
-import { Expense } from "../../store/expenses-context"
+import { Expense } from "../../utils/types"
 
 const renderExpenseItem = (itemData) => {
   return <ExpenseItem {...itemData.item} />

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import { WebView } from "react-native-webview";
-import { getRandomDarkColor } from "../../utils/date";
+import { getRandomDarkColor } from "../../utils/utilFunctions";
 
 const ChartWebView = ({ expenseCategories, expenseValues }) => {
   const webViewRef = useRef(null);

@@ -1,22 +1,17 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { IconButton } from "../UI/IconButton";
 import { useState } from "react";
 import { GlobalStyles } from "../../constants/styles";
 import { iconsList } from "../../store/expenses-context";
-
-
-// Function to split the array into two equal parts (rows)
-const splitIntoRows = (array, numRows) => {
-  const rowSize = Math.ceil(array.length / numRows);
-  return [array.slice(0, rowSize), array.slice(rowSize)];
-};
+import { Category } from "../../utils/types";
+import { splitIntoRows } from "../../utils/utilFunctions";
 
 const chunkedIcons = splitIntoRows(iconsList, 2); // Split into 2 horizontal rows
 
-export const CategorySelect = ({ onChange, defaultCategory }) => {
+export const CategorySelect: React.FC<{onChange: (category: Category) => void, defaultCategory: Category}> = ({ onChange, defaultCategory }) => {
   const [category, setCategory] = useState(defaultCategory);
 
-  const handleIconPress = (selectedCategory) => {
+  const handleIconPress = (selectedCategory: Category) => {
     setCategory(selectedCategory);
     onChange(selectedCategory);
   };
