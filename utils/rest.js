@@ -49,3 +49,36 @@ export const loginUser = async (email, password) => {
 });
 return res.data;
 }
+
+export const refreshFirebaseToken = async (refreshToken) => {
+
+  try {
+    if (!refreshToken) throw new Error('No refresh token found.');
+
+    const response = await axios.post(
+      `${TOKEN_REFRESH_URL}`,
+      new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
+      }).toString(),
+      { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+    );
+
+    const { id_token, refresh_token, user_id } = response.data;
+    return {idToken: id_token, refreshToken: refresh_token, localId: user_id}
+  } catch (error) {
+    console.error('Token refresh failed:', error.response?.data || error.message);
+    return null;
+  }
+};
+
+export const scheduleTokenRefresh = async (refreshToken) => {
+  const timeoutId = setTimeout(async () => {
+    const newUserData = await refreshFirebaseToken(refreshToken);
+    if (newUserData) {
+      console.log('Token refreshed successfully');
+      scheduleTokenRefresh(refreshToken); // Schedule next refresh
+    }
+  }, 55 * 60 * 1000); // Refresh 5 minutes before expiry
+  return timeoutId
+};

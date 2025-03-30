@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, PropsWithChildren, useEffect, useReducer, useState } from "react";
+import { scheduleTokenRefresh } from "../utils/rest";
 
 
 const initialAuthState = {
@@ -32,6 +33,15 @@ export const AuthContextProvider: React.FC<PropsWithChildren> = ({ children }) =
       }
     }
     fetchToken();
+  }, [])
+  useEffect(() => {
+    let id = null;
+    const tokenRefresh = async () => {
+      const userData = await AsyncStorage.getItem("userData")
+       id = await scheduleTokenRefresh(JSON.parse(userData)?.refreshToken);
+    }
+    tokenRefresh();
+    () => clearTimeout(id);
   }, [])
   const logout = async () => {
     await AsyncStorage.removeItem("userData")
