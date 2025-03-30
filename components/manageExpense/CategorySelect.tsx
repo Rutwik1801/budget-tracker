@@ -17,8 +17,7 @@ export const CategorySelect: React.FC<{onChange: (category: Category) => void, d
   };
 
   return (
-    <View>
-      <Text style={{ marginBottom: 5 }}>Select A Category</Text>
+    <View style={{marginBottom: 8}}>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <View style={{ flexDirection: "column" }}>
           {chunkedIcons.map((row, rowIndex) => (
@@ -28,7 +27,7 @@ export const CategorySelect: React.FC<{onChange: (category: Category) => void, d
                   <IconButton
                     icon={icon.value}
                     size={30}
-                    color={category?.value === icon.value ? GlobalStyles.colors.accent500 : GlobalStyles.colors.primary800}
+                    color={category?.value === icon.value ? GlobalStyles.colors.accent500 : GlobalStyles.colors.primary100}
                     onPress={() => handleIconPress(icon)}
                   />
                   <Text style={{ color: category?.value === icon.value ? GlobalStyles.colors.accent500 : GlobalStyles.colors.primary800, fontSize: 12 }}>{icon.label}</Text>

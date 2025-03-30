@@ -2,17 +2,16 @@ import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Input from './Input';
 import { Button } from '../UI/Button';
+import { GlobalStyles } from '../../constants/styles';
 
 
 function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
   const [enteredEmail, setEnteredEmail] = useState('');
-  const [enteredConfirmEmail, setEnteredConfirmEmail] = useState('');
   const [enteredPassword, setEnteredPassword] = useState('');
   const [enteredConfirmPassword, setEnteredConfirmPassword] = useState('');
 
   const {
     email: emailIsInvalid,
-    confirmEmail: emailsDontMatch,
     password: passwordIsInvalid,
     confirmPassword: passwordsDontMatch,
   } = credentialsInvalid;
@@ -21,9 +20,6 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
     switch (inputType) {
       case 'email':
         setEnteredEmail(enteredValue);
-        break;
-      case 'confirmEmail':
-        setEnteredConfirmEmail(enteredValue);
         break;
       case 'password':
         setEnteredPassword(enteredValue);
@@ -37,14 +33,13 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
   function submitHandler() {
     onSubmit({
       email: enteredEmail,
-      confirmEmail: enteredConfirmEmail,
       password: enteredPassword,
       confirmPassword: enteredConfirmPassword,
     });
   }
 
   return (
-    <View style={styles.form}>
+    <View>
       <View>
         <Input
           label="Email Address"
@@ -53,15 +48,6 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
           keyboardType="email-address"
           isInvalid={emailIsInvalid}
         />
-        {!isLogin && (
-          <Input
-            label="Confirm Email Address"
-            onUpdateValue={updateInputValueHandler.bind(this, 'confirmEmail')}
-            value={enteredConfirmEmail}
-            keyboardType="email-address"
-            isInvalid={emailsDontMatch}
-          />
-        )}
         <Input
           label="Password"
           onUpdateValue={updateInputValueHandler.bind(this, 'password')}

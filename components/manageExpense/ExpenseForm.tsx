@@ -69,40 +69,42 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit, onCancel, ed
   };
 
   return <ScrollView style={styles.form} showsVerticalScrollIndicator={false} >
-    <View style={styles.inputsRow}>
-      <Input style={styles.rowInput} label="Amount" textInputConfig={{
+    <Input  textInputConfig={{
+      onChangeText: handleInputChange.bind(this, "description"),
+      value: expense.description.value
+    }}
+    style={{marginTop: 0}}
+    textInputStyle={{borderWidth: 0, fontSize: 35, fontWeight: "bold", letterSpacing: 2}}
+    placeholder="Description"
+      invalid={!expense.description.isValid}
+    />
+      <Input style={styles.rowInput} textInputConfig={{
         keyboardType: "decimal-pad",
         onChangeText: handleInputChange.bind(this, "amount"),
         value: expense.amount.value?.toString() 
       }}
+      textInputStyle={{paddingBottom: 10, borderWidth: 0, fontSize: 25, fontWeight: "bold", letterSpacing: 2, borderBottomWidth: 1, borderColor: "#ccc"}}
+
+      placeholder="$ Amount"
         invalid={!expense.amount.isValid}
       />
- </View>
-    <View>
-    <Text>Transaction type</Text>
-            <Button buttonContainerStyle={styles.button}  onPress={() => handleInputChange("transactionType", "Expense")} >Expense</Button>
-            <Button buttonContainerStyle={styles.button} onPress={() => handleInputChange("transactionType", "Income")} >Income</Button>
+    <Text style={{color:GlobalStyles.colors.primary200, fontSize: 24}} >Transaction type</Text>
+    <View style={{flexDirection:"row", justifyContent: "space-around", alignItems:"center", marginVertical: 8}}>
+            <Button buttonContainerStyle={styles.transactionButton}  onPress={() => handleInputChange("transactionType", "Expense")} >Expense</Button>
+            <Button buttonContainerStyle={styles.transactionButton} onPress={() => handleInputChange("transactionType", "Income")} >Income</Button>
    
     </View>
-    <Text>Date</Text>
+    <Text style={{color:GlobalStyles.colors.primary200, fontSize: 24, marginBottom: 8}} >Date</Text>
     <DateTimePicker
       mode="single"
       date={expense.date.value}
       onChange={(date) => date && handleInputChange("date", date)}
       styles={useDefaultStyles()}
     />
+    <Text style={{color:GlobalStyles.colors.primary200, fontSize: 24, marginBottom: 16, marginTop: 26}}>Select A Category</Text>
     <CategorySelect onChange={handleInputChange.bind(this, "category")} defaultCategory={expense.category.value} />
-    <Input label="Description" textInputConfig={{
-      multiline: true,
-      onChangeText: handleInputChange.bind(this, "description"),
-      value: expense.description.value
-    }}
-      invalid={!expense.description.isValid}
-    />
-    <View style={styles.buttonContainer}>
-      <Button buttonContainerStyle={styles.button} mode="flat" onPress={onCancel} >Cancel</Button>
       <Button buttonContainerStyle={styles.button} onPress={handleSubmit} >{isEditing ? "Update" : "Add"}</Button>
-    </View>
+      <Button buttonContainerStyle={styles.button} mode="flat" onPress={onCancel} >Cancel</Button>
     {isEditing && <View style={styles.delete} ><IconButton icon="trash" color={GlobalStyles.colors.error500} size={36} onPress={onDelete} /></View>}
   </ScrollView>
 }
@@ -145,7 +147,12 @@ const styles = StyleSheet.create({
   },
   button: {
     minWidth: 120,
-    marginHorizontal: 8
+    marginHorizontal: 8,
+    marginBottom: 8,
+  },
+  transactionButton: {
+    backgroundColor: "#eee",
+    padding: 16
   },
   errorText: {
     textAlign: "center",

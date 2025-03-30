@@ -15,7 +15,7 @@ export const ExpensesSummary: React.FC<{ periodName: string, expenses: Expense[]
   return <View style={styles.container}>
     <Text style={styles.period} >{periodName}</Text>
     <Text style={[styles.sum, { color: (expensesSum < 0 || type === "Expense") ? GlobalStyles.colors.primaryRed : GlobalStyles.colors.primaryGreen }]}
-    >{`${expensesSum >=0 ? "+" : "-"}${getCurrencyFormattedText(expensesSum, currency)}`}</Text>
+    >{`${type === "Income" ? "+" : type === "Expense" ? "-" : ""}${getCurrencyFormattedText(expensesSum, currency)}`}</Text>
   </View>
 }
 

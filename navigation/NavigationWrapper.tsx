@@ -18,7 +18,7 @@ import { ErrorOverlay } from "../components/UI/ErrorOverlay";
 import { AuthContext } from "../store/auth-context";
 import Signup from "../screens/Signup";
 import Login from "../screens/Login";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Settings } from "../screens/Settings";
 
 
 const TopTabs = createMaterialTopTabNavigator();
@@ -62,6 +62,11 @@ export const ExpensesOverview = () => {
       }}>
         {() => <TopTabsNavigator isRecentTab={false} />}
       </BottomTabs.Screen>
+      <BottomTabs.Screen name="Settings" component={Settings}
+      options={{
+        title: "Settings",
+        tabBarLabel: "Settings", tabBarIcon: ({ color, size }) => <Ionicons name="settings" size={size} color={color} />
+      }} />
   </BottomTabs.Navigator>);
 }
 

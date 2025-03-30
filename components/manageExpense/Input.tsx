@@ -4,21 +4,23 @@ import { GlobalStyles } from "../../constants/styles"
 type InputProps = {
   label: string,
   style?: Object,
+  textInputStyle?: Object,
   textInputConfig?: Record<string, any>,
+  placeholder?: string,
   invalid?: boolean
 }
 
-export const Input:React.FC<InputProps> = ({label, style, textInputConfig, invalid}) => {
+export const Input: React.FC<InputProps> = ({ label, style, textInputConfig, textInputStyle, invalid, placeholder }) => {
   const inputStyles: any = [styles.input]
   if (textInputConfig && textInputConfig.multiline) {
     inputStyles.push(styles.inputMultiline)
   }
-  if(invalid) {
+  if (invalid) {
     inputStyles.push(styles.inputInvalid)
   }
   return <View style={[styles.inputContainer, style]}>
     <Text style={[styles.label, invalid && styles.labelInvalid]}>{label}</Text>
-    <TextInput style={inputStyles} {...textInputConfig}></TextInput>
+    <TextInput style={textInputStyle ? textInputStyle : inputStyles} {...textInputConfig} placeholder={placeholder ?? ""} placeholderTextColor={GlobalStyles.colors.primary400}></TextInput>
   </View>
 }
 
@@ -33,17 +35,17 @@ const styles = StyleSheet.create({
     marginBottom: 4
   },
   input: {
-borderWidth: 1,
-color:GlobalStyles.colors.primary800,
-padding: 6,
-borderRadius: 6,
-fontSize: 18
+    borderWidth: 1,
+    color: GlobalStyles.colors.primary800,
+    padding: 6,
+    borderRadius: 6,
+    fontSize: 18
   },
   inputMultiline: {
     minHeight: 100,
     textAlignVertical: 'top'
   },
-  labelInvalid : {
+  labelInvalid: {
     color: GlobalStyles.colors.error500
   },
   inputInvalid: {

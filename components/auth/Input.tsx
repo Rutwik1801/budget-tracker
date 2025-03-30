@@ -34,8 +34,9 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   label: {
-    color: GlobalStyles.colors.primary50,
+    color: GlobalStyles.colors.primary200,
     marginBottom: 4,
+    fontWeight: "bold"
   },
   labelInvalid: {
     color: GlobalStyles.colors.error500,
@@ -43,9 +44,10 @@ const styles = StyleSheet.create({
   input: {
     paddingVertical: 8,
     paddingHorizontal: 6,
-    backgroundColor: GlobalStyles.colors.primary50,
+    backgroundColor: GlobalStyles.colors.primaryGrey,
     borderRadius: 4,
     fontSize: 16,
+    color: "black"
   },
   inputInvalid: {
     backgroundColor: GlobalStyles.colors.error50,
