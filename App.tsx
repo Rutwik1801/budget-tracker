@@ -5,6 +5,35 @@ import { AuthContext, AuthContextProvider } from './store/auth-context';
 import { useContext, useEffect } from 'react';
 import { refreshFirebaseToken } from './utils/rest';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Notifications from 'expo-notifications'
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => {
+    return {
+      shouldShowAlert: true,
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+    }
+  }
+});
+
+export const allowsNotificationsAsync = async () => {
+  const settings = await Notifications.getPermissionsAsync();
+  return (
+    settings.granted ||
+    settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL
+  );
+};
+ 
+export const requestPermissionsAsync = async () => {
+  return await Notifications.requestPermissionsAsync({
+    ios: {
+      allowAlert: true,
+      allowBadge: true,
+      allowSound: true,
+    },
+  });
+}
 
 export const Root = () => {
   const { login } = useContext(AuthContext)

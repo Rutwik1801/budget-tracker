@@ -19,9 +19,19 @@ import { AuthContext } from "../store/auth-context";
 import Signup from "../screens/Signup";
 import Login from "../screens/Login";
 import { Settings } from "../screens/Settings";
+import { Image, TouchableOpacity } from "react-native";
 
 
 const TopTabs = createMaterialTopTabNavigator();
+
+export const IconComponent = () => (
+  <TouchableOpacity onPress={() => alert('Icon Pressed!')} style={{ marginLeft: 15 }}>
+    <Image 
+      source={require('../assets/icon.png')}
+      style={{ width: 30, height: 30, borderRadius: 24 }} 
+    />
+  </TouchableOpacity>
+)
 
 export const TopTabsNavigator = ({isRecentTab = true}) => {
   return (
@@ -43,6 +53,7 @@ export const ExpensesOverview = () => {
     tabBarStyle: { backgroundColor: GlobalStyles.colors.primary800 },
     tabBarActiveTintColor: GlobalStyles.colors.accent500,
     tabBarInactiveTintColor: GlobalStyles.colors.primary500,
+    headerLeft: () => (<IconComponent />),
     headerRight: ({ tintColor }) => <IconButton icon="add" size={28} color={tintColor} onPress={() => { navigation.navigate("ManageExpense") }} />
   })}>
     <BottomTabs.Screen name="RecentExpenses" component={TopTabsNavigator}
@@ -113,8 +124,9 @@ export const ExpensesStackNavigator = () => {
     if(error && !isLoading) return <ErrorOverlay message={error} onConfirm={() => setError(null)} />
     if(isLoading) return <LoadingOverlay />
   return <Stack.Navigator screenOptions={() => ({
+    headerLeft: () => (<IconComponent />),
       headerStyle: { backgroundColor: GlobalStyles.colors.primary800 },
-      headerTintColor: GlobalStyles.colors.primary50,
+      headerTintColor: GlobalStyles.colors.primary50
     })}>
       <Stack.Screen name="ExpensesOverview" component={ExpensesOverview} options={{ headerShown: false }} />
       <Stack.Screen name="ManageExpense" component={ManageExpenses} options={{
