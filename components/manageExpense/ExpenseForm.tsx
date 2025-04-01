@@ -90,8 +90,8 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit, onCancel, ed
       />
     <Text style={{color:GlobalStyles.colors.primary200, fontSize: 24}} >Transaction type</Text>
     <View style={{flexDirection:"row", justifyContent: "space-around", alignItems:"center", marginVertical: 8}}>
-            <Button buttonContainerStyle={styles.transactionButton}  onPress={() => handleInputChange("transactionType", "Expense")} >Expense</Button>
-            <Button buttonContainerStyle={styles.transactionButton} onPress={() => handleInputChange("transactionType", "Income")} >Income</Button>
+            <Button buttonContainerStyle={{...styles.transactionButton, backgroundColor: (expense.transactionType.value === "Expense") ? "red" : "#eee"}} buttonStyle={{backgroundColor: "none"}} onPress={() => handleInputChange("transactionType", "Expense")} >Expense</Button>
+            <Button buttonContainerStyle={{...styles.transactionButton, backgroundColor: (expense.transactionType.value === "Income") ? "green" : "#eee"}} buttonStyle={{backgroundColor: "none"}} onPress={() => handleInputChange("transactionType", "Income")} >Income</Button>
    
     </View>
     <Text style={{color:GlobalStyles.colors.primary200, fontSize: 24, marginBottom: 8}} >Date</Text>
@@ -152,7 +152,9 @@ const styles = StyleSheet.create({
   },
   transactionButton: {
     backgroundColor: "#eee",
-    padding: 16
+    borderRadius: 15,
+    paddingHorizontal: 16,
+    paddingVertical: 4
   },
   errorText: {
     textAlign: "center",

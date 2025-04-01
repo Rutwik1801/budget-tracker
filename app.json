@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "budget-tracker",
-    "slug": "budget-tracker",
+    "name": "Budgetify",
+    "slug": "bugetify",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,13 +13,20 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "buildNumber": "1.0.0",
+      "bundleIdentifier": "com.ruts1801.bugetify",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#ffffff",
+        "versionCode": 1
+      },
+      "package": "com.ruts1801.bugetify"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -35,6 +42,11 @@
           "enableBackgroundRemoteNotifications": false
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "f2c6e57f-9e72-4333-bdca-8324f0f6191e"
+      }
+    }
   }
 }

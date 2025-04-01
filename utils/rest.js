@@ -1,8 +1,10 @@
 import axios from "axios"
-
-// const BACKEND_URL = ""
-// const SIGNUP_URL = ""
-// const LOGIN_URL = ""
+import Constants from "expo-constants"
+const BACKEND_URL = Constants.expoConfig?.extra?.BACKEND_URL
+const SIGNUP_URL = Constants.expoConfig?.extra?.SIGNUP_URL
+const LOGIN_URL = Constants.expoConfig?.extra?.LOGIN_URL
+const TOKEN_REFRESH_URL = Constants.expoConfig?.extra?.TOKEN_REFRESH_URL
+const API_KEY = Constants.expoConfig?.extra?.API_KEY
 
 export const addExpense = async (token, userId, expenseData) => {
 const res = axios.post(`${BACKEND_URL}/${userId}.json?auth=${token}`, expenseData);

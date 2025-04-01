@@ -2,17 +2,18 @@ import { Pressable, StyleSheet, Text, View } from "react-native"
 import { GlobalStyles } from "../constants/styles"
 import { IconButton } from "./UI/IconButton"
 import { useNavigation } from "@react-navigation/native"
+import { getCurrencyFormattedText } from "../utils/utilFunctions"
 
-export const CategorizedExpenses = ({ segregatedExpenses, totalAmount }) => {
+export const CategorizedExpenses:React.FC<{segregatedExpenses: Object[], totalAmount: number}> = ({ segregatedExpenses, totalAmount }) => {
 
   return <View style={{ padding: 8 }}>
     {Object.entries(segregatedExpenses).map(item => <CategorizedExpense key={item[0]} values={item} totalAmount={totalAmount} />)}
   </View>
 }
 
-export const CategorizedExpense = ({ values, totalAmount }) => {
+export const CategorizedExpense: React.FC<{values: Object[], totalAmount: number}> = ({ values, totalAmount }) => {
   const navigation = useNavigation()
-  const { category, total, ids } = values[1]
+  const { category, total } = values[1]
   const amountPercentage = (total.toFixed(2) / totalAmount) * 100
   return (
     <Pressable onPress={() => navigation.navigate("DateWiseExpenses", {category: category})}>
@@ -23,8 +24,8 @@ export const CategorizedExpense = ({ values, totalAmount }) => {
           <Text style={styles.categoryLabel}>{category.label}</Text>
         </View>
         <View style={styles.amountContainer}>
-          <Text style={styles.amount} >{`$${total.toFixed(2)}`}</Text>
-          <Text style={styles.percent}>{`-${amountPercentage.toFixed(2)}%`}</Text>
+          <Text style={{...styles.amount, color: total >= 0 ? "green" : "red"}} >{`${total >=0 ? "+" : ""}${getCurrencyFormattedText(total.toFixed(2), "USD")}`}</Text>
+          <Text style={{...styles.percent, color: amountPercentage >= 0 ? "green" : "red"}}>{`${amountPercentage >=0 ? "+" : ""}${amountPercentage.toFixed(2)}%`}</Text>
         </View>
       </View>
       <View

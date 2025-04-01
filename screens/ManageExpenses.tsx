@@ -9,10 +9,10 @@ import { ErrorOverlay } from "../components/UI/ErrorOverlay"
 import { AuthContext } from "../store/auth-context"
 
 export const ManageExpenses = ({route, navigation}) => {
-  const { authState } = useContext(AuthContext)
-  const {idToken, localId} = authState?.userCredentials
+  const { isLoggedIn, userCredentials } = useContext(AuthContext)
+  const {idToken, localId} = userCredentials
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState()
+  const [error, setError] = useState<string | null>(null)
   const editedExpenseId = route.params?.expenseId
   const isEditing = !!editedExpenseId
       const expensesCtx = useContext(ExpensesContext)

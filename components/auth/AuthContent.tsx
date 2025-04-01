@@ -22,7 +22,7 @@ function AuthContent({ isLogin, onAuthenticate }) {
     }
   }
 
-  function submitHandler(credentials) {
+  function submitHandler(credentials: {email: string, password: string, confirmPassword: string}) {
     let { email, password, confirmPassword } = credentials;
 
     email = email.trim();

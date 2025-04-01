@@ -57,7 +57,7 @@ export const getAnalyticsData = (expenses: Expense[]) => expenses.reduce(
       };
     }
     acc.segregatedExpenses[categoryKey].ids.push(expense.id);
-    acc.segregatedExpenses[categoryKey].total += expense.amount;
+    acc.segregatedExpenses[categoryKey].total += transactionType === "Income" ? expense.amount : (-expense.amount);
     acc.expensePieChartData[categoryKey] = (acc.expensePieChartData[categoryKey] || 0) + expense.amount;
 
     // Handle transaction type-based segregation

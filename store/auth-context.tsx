@@ -5,12 +5,16 @@ import { scheduleTokenRefresh } from "../utils/rest";
 
 const initialAuthState = {
   isLoggedIn: false,
-  userCredentials: {}
+  userCredentials: {
+    idToken: "",
+    localId: "",
+    refreshToken: ""
+  }
 }
 
 export const AuthContext = createContext(initialAuthState);
 
-export const authReducer = (state, action) => {
+export const authReducer = (state: any, action: { type: any; payload?: any; }) => {
   switch (action.type) {
     case 'SIGNUP':
     case "LOGIN":
@@ -23,7 +27,7 @@ export const authReducer = (state, action) => {
 }
 
 export const AuthContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [authState, dispatch] = useReducer(authReducer, {});
+  const [authState, dispatch] = useReducer(authReducer, initialAuthState);
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -35,10 +39,10 @@ export const AuthContextProvider: React.FC<PropsWithChildren> = ({ children }) =
     fetchToken();
   }, [])
   useEffect(() => {
-    let id = null;
+    let id: any = null;
     const tokenRefresh = async () => {
       const userData = await AsyncStorage.getItem("userData")
-       id = await scheduleTokenRefresh(JSON.parse(userData)?.refreshToken);
+       id = await scheduleTokenRefresh(JSON.parse(userData as string)?.refreshToken);
     }
     tokenRefresh();
     () => clearTimeout(id);
@@ -47,16 +51,17 @@ export const AuthContextProvider: React.FC<PropsWithChildren> = ({ children }) =
     await AsyncStorage.removeItem("userData")
     dispatch({ type: "LOGOUT" });
   }
-  const login = async (userData) => {
+  const login = async (userData: any) => {
     await AsyncStorage.setItem("userData", JSON.stringify(userData))
     dispatch({ type: "LOGIN", payload: userData });
   }
-  const signup = async (userData) => {
+  const signup = async (userData: any) => {
     await AsyncStorage.setItem("userData", JSON.stringify(userData))
     dispatch({ type: "SIGNUP", payload: userData });
   }
   const value = {
-    authState,
+    isLoggedIn: authState?.isLoggedIn,
+    userCredentials: authState?.userCredentials,
     logout,
     login,
     signup

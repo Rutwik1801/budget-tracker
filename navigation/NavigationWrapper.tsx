@@ -54,7 +54,7 @@ export const ExpensesOverview = () => {
     tabBarActiveTintColor: GlobalStyles.colors.accent500,
     tabBarInactiveTintColor: GlobalStyles.colors.primary500,
     headerLeft: () => (<IconComponent />),
-    headerRight: ({ tintColor }) => <IconButton icon="add" size={28} color={tintColor} onPress={() => { navigation.navigate("ManageExpense") }} />
+    headerRight: ({ tintColor }) => <IconButton icon="add" size={28} color={tintColor as string} onPress={() => { navigation.navigate("ManageExpense") }} />
   })}>
     <BottomTabs.Screen name="RecentExpenses" component={TopTabsNavigator}
       options={{
@@ -82,10 +82,10 @@ export const ExpensesOverview = () => {
 }
 
 export const NavigationWrapper = () => {
-  const { authState } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
 
   return <NavigationContainer>
-    {authState?.isLoggedIn ? <ExpensesStackNavigator /> : <AuthNavigator />}
+    { isLoggedIn ? <ExpensesStackNavigator /> : <AuthNavigator />}
   </NavigationContainer>
 }
 
@@ -101,11 +101,11 @@ return <Stack.Navigator screenOptions={() => ({
 }
 
 export const ExpensesStackNavigator = () => {
-  const { authState } = useContext(AuthContext)
-  const {idToken, localId} = authState?.userCredentials
+  const { isLoggedIn, userCredentials } = useContext(AuthContext)
+  const {idToken, localId} = userCredentials
   const Stack = createNativeStackNavigator();
   const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState()
+  const [error, setError] = useState<string | null>(null)
   const {setExpenses} = useContext(ExpensesContext);
   // AsyncStorage.removeItem("userData")
     useEffect(() => {

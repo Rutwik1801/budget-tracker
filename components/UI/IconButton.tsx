@@ -5,8 +5,8 @@ type IconProps = {
   icon: string,
   color: string,
   size: number,
-  background: string,
-  onPress: () => void
+  background?: string,
+  onPress?: () => void
 }
 export const IconButton: React.FC<IconProps> = ({icon, color, size, background, onPress}) => {
   return <Pressable onPress={onPress} style={({pressed}) => pressed && styles.pressed} >

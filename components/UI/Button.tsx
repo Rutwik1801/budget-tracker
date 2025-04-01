@@ -5,12 +5,13 @@ import { PropsWithChildren } from "react"
 type ButtonProps = {
   onPress: () => void,
   mode?: "flat",
-  buttonContainerStyle?: Object
+  buttonContainerStyle?: Object,
+  buttonStyle?: Object
 }
-export const Button:React.FC<PropsWithChildren<ButtonProps>> = ({ children, onPress, mode, buttonContainerStyle }) => {
+export const Button:React.FC<PropsWithChildren<ButtonProps>> = ({ children, onPress, mode, buttonContainerStyle, buttonStyle }) => {
   return <View style={buttonContainerStyle}>
     <Pressable onPress={onPress} style={({pressed}) => pressed && styles.pressed} >
-      <View style={[styles.button, mode === "flat" && styles.flat]} >
+      <View style={[styles.button, mode === "flat" ? styles.flat : buttonStyle]} >
         <Text style={styles.buttonText} >{children}</Text>
       </View>
     </Pressable>
