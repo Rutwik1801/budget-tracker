@@ -2,7 +2,12 @@ import {StyleSheet, Text, View } from "react-native"
 import { Button } from "./Button"
 import { GlobalStyles } from "../../constants/styles"
 
-export const ErrorOverlay = ({message, onConfirm}) => {
+export type OverlayProps = {
+  message: string;
+  onConfirm: () => void;
+}
+
+export const ErrorOverlay = ({message, onConfirm}: OverlayProps) => {
   return (<View style={styles.container}>
     <Text style={styles.text} >An Error Occured</Text>
     <Text style={styles.text} >{message}</Text>

@@ -16,7 +16,7 @@ export const iconsList = [
   { label: "Medical", value: "heart-outline" },
   { label: "House", value: "home-outline" },
   { label: "Restaurant", value: "restaurant-outline" },
-  { label: "Bills", value: "recipt-outline" },
+  { label: "Bills", value: "receipt-outline" },
   { label: "Subscriptions", value: "mail-outline" },
   { label: "Tickets", value: "ticket-outline" },
   { label: "Others", value: "code-working-outline" }

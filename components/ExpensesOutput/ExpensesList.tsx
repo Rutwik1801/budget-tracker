@@ -1,8 +1,8 @@
-import { FlatList, View } from "react-native"
+import { FlatList, ListRenderItemInfo, View } from "react-native"
 import { ExpenseItem } from "./ExpenseItem"
 import { Expense } from "../../utils/types"
 
-const renderExpenseItem = (itemData) => {
+const renderExpenseItem = (itemData: ListRenderItemInfo<Expense>) => {
   return <ExpenseItem {...itemData.item} />
 }
 

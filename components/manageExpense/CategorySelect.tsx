@@ -8,7 +8,7 @@ import { splitIntoRows } from "../../utils/utilFunctions";
 
 const chunkedIcons = splitIntoRows(iconsList, 2); // Split into 2 horizontal rows
 
-export const CategorySelect: React.FC<{onChange: (category: Category) => void, defaultCategory: Category}> = ({ onChange, defaultCategory }) => {
+export const CategorySelect: React.FC<{onChange: (category: Category) => void, defaultCategory?: Category}> = ({ onChange, defaultCategory }) => {
   const [category, setCategory] = useState(defaultCategory);
 
   const handleIconPress = (selectedCategory: Category) => {

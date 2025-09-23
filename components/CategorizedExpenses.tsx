@@ -4,7 +4,7 @@ import { IconButton } from "./UI/IconButton"
 import { useNavigation } from "@react-navigation/native"
 import { getCurrencyFormattedText } from "../utils/utilFunctions"
 
-export const CategorizedExpenses:React.FC<{segregatedExpenses: Object[], totalAmount: number}> = ({ segregatedExpenses, totalAmount }) => {
+export const CategorizedExpenses:React.FC<{segregatedExpenses: Object, totalAmount: number}> = ({ segregatedExpenses, totalAmount }) => {
 
   return <View style={{ padding: 8 }}>
     {Object.entries(segregatedExpenses).map(item => <CategorizedExpense key={item[0]} values={item} totalAmount={totalAmount} />)}

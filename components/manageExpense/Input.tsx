@@ -2,7 +2,7 @@ import { StyleSheet, Text, TextInput, View } from "react-native"
 import { GlobalStyles } from "../../constants/styles"
 
 type InputProps = {
-  label: string,
+  label?: string,
   style?: Object,
   textInputStyle?: Object,
   textInputConfig?: Record<string, any>,

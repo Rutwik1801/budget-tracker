@@ -100,34 +100,33 @@ const BarChartWebView = ({ transactionTypes, transactionValues }) => {
 
   return (
     <View style={{ minHeight: 300, backgroundColor: "transparent", padding: 20, marginBottom: 30 }}>
-      <WebView
-        ref={webViewRef}
-        originWhitelist={["*"]}
-        source={{ html: htmlContent }}
-        style={{ backgroundColor: "transparent" }}
-        javaScriptEnabled={true}
-        domStorageEnabled={true}
-        injectedJavaScript={`
-          window.addEventListener('message', function(event) {
-            try {
-              var data = JSON.parse(event.data);
-              updateChart(data);
-            } catch (error) {
-              window.ReactNativeWebView.postMessage("Error parsing message: " + error.message);
-            }
-          });
-          true;
-        `}
-        onLoad={() => {
-          setIsWebViewLoaded(true);
-        }}
-        onMessage={(event) => {
-          console.log("WebView Message:", event.nativeEvent.data);
-        }}
-        onError={(syntheticEvent) => {
-          console.error("WebView Error:", syntheticEvent.nativeEvent);
-        }}
-      />
+<WebView
+  ref={webViewRef}
+  originWhitelist={["*"]}
+  source={{ html: htmlContent }}
+  style={{ backgroundColor: "transparent" }}
+  javaScriptEnabled={true}
+  domStorageEnabled={true}
+  allowFileAccess={true} 
+  allowFileAccessFromFileURLs={true} 
+  allowUniversalAccessFromFileURLs={true} 
+  mixedContentMode="always" // This enables mixed content loading
+  injectedJavaScript={`
+    window.addEventListener('message', function(event) {
+      try {
+        var data = JSON.parse(event.data);
+        updateChart(data);
+      } catch (error) {
+        window.ReactNativeWebView.postMessage("Error parsing message: " + error.message);
+      }
+    });
+    true;
+  `}
+  onLoad={() => setIsWebViewLoaded(true)}
+  onMessage={(event) => console.log("WebView Message:", event.nativeEvent.data)}
+  onError={(syntheticEvent) => console.error("WebView Error:", syntheticEvent.nativeEvent)}
+/>
+
     </View>
   );
 };

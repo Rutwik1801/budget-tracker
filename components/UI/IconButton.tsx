@@ -8,10 +8,13 @@ type IconProps = {
   background?: string,
   onPress?: () => void
 }
+
+type IconName = keyof typeof Ionicons.glyphMap
+
 export const IconButton: React.FC<IconProps> = ({icon, color, size, background, onPress}) => {
   return <Pressable onPress={onPress} style={({pressed}) => pressed && styles.pressed} >
     <View style={{...styles.buttonContainer, backgroundColor: background}}>
-      <Ionicons name={icon} size={size} color={color} />
+      <Ionicons name={icon as IconName} size={size} color={color} />
     </View>
   </Pressable>
 }

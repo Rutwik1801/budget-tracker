@@ -4,8 +4,19 @@ import Input from './Input';
 import { Button } from '../UI/Button';
 import { GlobalStyles } from '../../constants/styles';
 
+export type CredentialsInvalid = {
+email:boolean;
+password: boolean;
+confirmPassword: boolean;  
+}
 
-function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
+export type Credentials = {
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+function AuthForm({ isLogin, onSubmit, credentialsInvalid }: {isLogin: boolean; onSubmit: (val: Credentials) => void; credentialsInvalid: CredentialsInvalid}) {
   const [enteredEmail, setEnteredEmail] = useState('');
   const [enteredPassword, setEnteredPassword] = useState('');
   const [enteredConfirmPassword, setEnteredConfirmPassword] = useState('');
@@ -16,7 +27,7 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
     confirmPassword: passwordsDontMatch,
   } = credentialsInvalid;
 
-  function updateInputValueHandler(inputType, enteredValue) {
+  function updateInputValueHandler(inputType: "email" | "password" | "confirmPassword", enteredValue: string) {
     switch (inputType) {
       case 'email':
         setEnteredEmail(enteredValue);

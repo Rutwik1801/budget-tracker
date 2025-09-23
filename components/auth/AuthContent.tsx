@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Alert, StyleSheet, Text, View } from 'react-native';
-import AuthForm from './AuthForm';
+import AuthForm, { Credentials } from './AuthForm';
 import FlatButton from '../UI/FlatButton';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from '../UI/Button';
 import { IconButton } from '../UI/IconButton';
 
-function AuthContent({ isLogin, onAuthenticate }) {
+function AuthContent({ isLogin, onAuthenticate }: {isLogin: boolean; onAuthenticate: (val: {email: string; password: string}) => void;}) {
   const navigation = useNavigation()
   const [credentialsInvalid, setCredentialsInvalid] = useState({
     email: false,
@@ -22,7 +22,7 @@ function AuthContent({ isLogin, onAuthenticate }) {
     }
   }
 
-  function submitHandler(credentials: {email: string, password: string, confirmPassword: string}) {
+  function submitHandler(credentials: Credentials) {
     let { email, password, confirmPassword } = credentials;
 
     email = email.trim();
