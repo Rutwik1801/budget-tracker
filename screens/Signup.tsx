@@ -6,7 +6,7 @@ import { LoadingOverlay } from "../components/UI/LoadingOverlay";
 import { AuthContext } from "../store/auth-context";
 
 function Signup() {
-  const {signup} = useContext(AuthContext)
+  const { signup } = useContext(AuthContext)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState()
   const signUp = async ({email, password}) => {
