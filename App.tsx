@@ -7,6 +7,9 @@ import { refreshFirebaseToken } from './utils/rest';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications'
 
+import { GluestackUIProvider } from '@/components/UI/gluestack-ui-provider';
+import '@/global.css';
+
 Notifications.setNotificationHandler({
   handleNotification: async () => {
     return {
@@ -42,9 +45,13 @@ export const Root = () => {
     checkAndRefreshToken();
   }, [])
   return (
-    <ExpensesContextProvider>
+    
+    <GluestackUIProvider mode="dark">
+      <ExpensesContextProvider>
       <NavigationWrapper />
     </ExpensesContextProvider>
+    </GluestackUIProvider>
+  
   );
 }
 
