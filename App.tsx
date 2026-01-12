@@ -13,27 +13,11 @@ Notifications.setNotificationHandler({
       shouldShowAlert: true,
       shouldPlaySound: false,
       shouldSetBadge: false,
+      shouldShowBanner: true,
+      shouldShowList: true,
     }
   }
 });
-
-export const allowsNotificationsAsync = async () => {
-  const settings = await Notifications.getPermissionsAsync();
-  return (
-    settings.granted ||
-    settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL
-  );
-};
- 
-export const requestPermissionsAsync = async () => {
-  return await Notifications.requestPermissionsAsync({
-    ios: {
-      allowAlert: true,
-      allowBadge: true,
-      allowSound: true,
-    },
-  });
-}
 
 export const Root = () => {
   const { login } = useContext(AuthContext)

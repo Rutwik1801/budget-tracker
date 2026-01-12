@@ -1,7 +1,7 @@
 import * as Notifications from "expo-notifications";
 import { useEffect, useState } from "react";
 import { StyleSheet, Switch, View } from "react-native";
-import { allowsNotificationsAsync, requestPermissionsAsync } from "../../App";
+import { allowsNotificationsAsync, requestPermissionsAsync } from "../../utils/notifications";
 
 export const ToggleButton = () => {
   const [isOn, setIsOn] = useState(true);

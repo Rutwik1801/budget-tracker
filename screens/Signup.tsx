@@ -14,10 +14,12 @@ function Signup() {
     try {
       const res = await createUser(email,password)
       signup(res)
-    } catch (err) {
+    } catch (err: any) {
       setError(err.message)
+      console.error('Signup error:', err);
+      console.error('Error response:', err.response?.data);
     }
-   setIsLoading(false)
+    setIsLoading(false)
   }
   if(error && !isLoading) return <ErrorOverlay message={error} onConfirm={() => setError(null)} />
   if(isLoading) return <LoadingOverlay />
