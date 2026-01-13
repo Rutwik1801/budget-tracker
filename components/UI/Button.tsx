@@ -1,38 +1,27 @@
-import { Pressable, StyleSheet, Text, View } from "react-native"
-import { GlobalStyles } from "../../constants/styles"
 import { PropsWithChildren } from "react"
+import { Button as BaseButton } from "../base"
 
-type ButtonProps = {
+type CustomButtonProps = {
   onPress: () => void,
   mode?: "flat",
-  buttonContainerStyle?: Object,
-  buttonStyle?: Object
-}
-export const Button:React.FC<PropsWithChildren<ButtonProps>> = ({ children, onPress, mode, buttonContainerStyle, buttonStyle }) => {
-  return <View style={buttonContainerStyle}>
-    <Pressable onPress={onPress} style={({pressed}) => pressed && styles.pressed} >
-      <View style={[styles.button, mode === "flat" ? styles.flat : buttonStyle]} >
-        <Text style={styles.buttonText} >{children}</Text>
-      </View>
-    </Pressable>
-  </View>
+  className?: string,
+  containerClassName?: string
 }
 
-const styles = StyleSheet.create({
-  button: {
-    borderRadius: 4,
-    padding: 8,
-    backgroundColor: GlobalStyles.colors.accent500,
-    borderColor: GlobalStyles.colors.primary800,
-  },
-  flat: {
-    backgroundColor: GlobalStyles.colors.primaryGrey
-  },
-  buttonText: {
-    color: GlobalStyles.colors.primary50,
-    textAlign: "center"
-  },
-  pressed: {
-    opacity: 0.75,
-  }
-})
+export const Button: React.FC<PropsWithChildren<CustomButtonProps>> = ({ 
+  children, 
+  onPress, 
+  mode, 
+  className,
+  containerClassName
+}) => {
+  return (
+    <BaseButton
+      onPress={onPress}
+      mode={mode}
+      className={className}
+    >
+      {children}
+    </BaseButton>
+  )
+}

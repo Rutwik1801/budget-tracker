@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
 import Input from './Input';
 import { Button } from '../UI/Button';
-import { GlobalStyles } from '../../constants/styles';
+import { View } from '../base';
 
 export type CredentialsInvalid = {
 email:boolean;
@@ -54,14 +53,14 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }: {isLogin: boolean; 
       <View>
         <Input
           label="Email Address"
-          onUpdateValue={updateInputValueHandler.bind(this, 'email')}
+          onUpdateValue={(value) => updateInputValueHandler('email', value)}
           value={enteredEmail}
           keyboardType="email-address"
           isInvalid={emailIsInvalid}
         />
         <Input
           label="Password"
-          onUpdateValue={updateInputValueHandler.bind(this, 'password')}
+          onUpdateValue={(value) => updateInputValueHandler('password', value)}
           secure
           value={enteredPassword}
           isInvalid={passwordIsInvalid}
@@ -69,16 +68,13 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }: {isLogin: boolean; 
         {!isLogin && (
           <Input
             label="Confirm Password"
-            onUpdateValue={updateInputValueHandler.bind(
-              this,
-              'confirmPassword'
-            )}
+            onUpdateValue={(value) => updateInputValueHandler('confirmPassword', value)}
             secure
             value={enteredConfirmPassword}
             isInvalid={passwordsDontMatch}
           />
         )}
-        <View style={styles.buttons}>
+        <View className="mt-3">
           <Button onPress={submitHandler}>
             {isLogin ? 'Log In' : 'Sign Up'}
           </Button>
@@ -89,9 +85,3 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }: {isLogin: boolean; 
 }
 
 export default AuthForm;
-
-const styles = StyleSheet.create({
-  buttons: {
-    marginTop: 12,
-  },
-});

@@ -1,32 +1,15 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { GlobalStyles } from '../../constants/styles';
+import { Button } from '../base';
 
 function FlatButton({ children, onPress }) {
   return (
-    <Pressable
-      style={({ pressed }) => [styles.button, pressed && styles.pressed]}
+    <Button
+      mode="flat"
       onPress={onPress}
+      className="py-1.5 px-3"
     >
-      <View>
-        <Text style={styles.buttonText}>{children}</Text>
-      </View>
-    </Pressable>
+      {children}
+    </Button>
   );
 }
 
 export default FlatButton;
-
-const styles = StyleSheet.create({
-  button: {
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-  },
-  pressed: {
-    opacity: 0.7,
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: GlobalStyles.colors.primary400,
-    fontWeight:"bold"
-  },
-});

@@ -1,7 +1,7 @@
 import * as Notifications from "expo-notifications";
 import { useEffect, useState } from "react";
-import { StyleSheet, Switch, View } from "react-native";
 import { allowsNotificationsAsync, requestPermissionsAsync } from "../../utils/notifications";
+import { View, Switch } from "../base";
 
 export const ToggleButton = () => {
   const [isOn, setIsOn] = useState(true);
@@ -46,18 +46,8 @@ export const ToggleButton = () => {
   }, [isOn]);
 
   return (
-    <View style={styles.container}>
+    <View className="rounded-full border border-gray-300 flex-row items-center bg-gray-200">
       <Switch value={isOn} onValueChange={handleValueChange} />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    borderRadius: 25,
-    borderWidth: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#ccc",
-  },
-});

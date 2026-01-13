@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { Alert } from 'react-native';
 import AuthForm, { Credentials } from './AuthForm';
 import FlatButton from '../UI/FlatButton';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from '../UI/Button';
 import { IconButton } from '../UI/IconButton';
+import { View, Text } from '../base';
 
 function AuthContent({ isLogin, onAuthenticate }: {isLogin: boolean; onAuthenticate: (val: {email: string; password: string}) => void;}) {
   const navigation = useNavigation()
@@ -16,9 +17,9 @@ function AuthContent({ isLogin, onAuthenticate }: {isLogin: boolean; onAuthentic
 
   function switchAuthModeHandler() {
     if(isLogin) {
-      navigation.navigate("Signup")
+      (navigation as any).navigate("Signup")
     } else {
-      navigation.navigate("Login")
+      (navigation as any).navigate("Login")
     }
   }
 
@@ -49,21 +50,21 @@ function AuthContent({ isLogin, onAuthenticate }: {isLogin: boolean; onAuthentic
   }
 
   return (
-    <View style={styles.authContent}>
+    <View className="p-4 rounded-xl bg-white flex-1 pt-[140px]">
       <AuthForm
         isLogin={isLogin}
         onSubmit={submitHandler}
         credentialsInvalid={credentialsInvalid}
       />
-      <View style={styles.buttons}>
-        <FlatButton onPress={switchAuthModeHandler} >
+      <View className="mt-2 pb-2.5 border-b border-gray-500 mb-7">
+        <FlatButton onPress={switchAuthModeHandler}>
           {isLogin ? 'Create a new user' : 'Log in instead'}
         </FlatButton>
       </View>
       <Button onPress={() => {}}>
-        <View style={{flexDirection:"row", alignItems:"center", flex:1}}>
-        <IconButton icon='logo-google' size={20} color='black' />
-        <Text>Sign In with Google</Text>
+        <View className="flex-row items-center flex-1">
+          <IconButton icon='logo-google' size={20} color='black' />
+          <Text>Sign In with Google</Text>
         </View>
       </Button>
     </View>
@@ -71,20 +72,3 @@ function AuthContent({ isLogin, onAuthenticate }: {isLogin: boolean; onAuthentic
 }
 
 export default AuthContent;
-
-const styles = StyleSheet.create({
-  authContent: {
-    padding: 16,
-    borderRadius: 12,
-    backgroundColor: "white",
-    flex: 1,
-    paddingTop: 140
-  },
-  buttons: {
-    marginTop: 8,
-    paddingBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#777",
-    marginBottom: 30
-  },
-});

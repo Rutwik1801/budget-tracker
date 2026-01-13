@@ -1,6 +1,5 @@
-import {StyleSheet, Text, View } from "react-native"
 import { Button } from "./Button"
-import { GlobalStyles } from "../../constants/styles"
+import { View, Text } from "../base"
 
 export type OverlayProps = {
   message: string;
@@ -8,21 +7,11 @@ export type OverlayProps = {
 }
 
 export const ErrorOverlay = ({message, onConfirm}: OverlayProps) => {
-  return (<View style={styles.container}>
-    <Text style={styles.text} >An Error Occured</Text>
-    <Text style={styles.text} >{message}</Text>
-    <Button onPress={onConfirm} >Okay</Button>
-    </View>)
+  return (
+    <View className="flex-1 justify-center items-center p-6">
+      <Text className="text-white text-lg mb-4">An Error Occurred</Text>
+      <Text className="text-white text-base mb-6 text-center">{message}</Text>
+      <Button onPress={onConfirm}>Okay</Button>
+    </View>
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 24,
-  },
-  text: {
-    color: GlobalStyles.colors.primary50
-  }
-})

@@ -1,12 +1,11 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native"
-import { Input } from "./Input"
-import { GlobalStyles } from "../../constants/styles"
 import { useContext, useState } from "react"
+import { Input } from "./Input"
 import { ExpensesContext } from "../../store/expenses-context"
 import { IconButton } from "../UI/IconButton"
 import { Button } from "../UI/Button"
 import { CategorySelect } from "./CategorySelect"
 import DateTimePicker, { useDefaultStyles } from "react-native-ui-datepicker"
+import { ScrollView, View, Text } from "../base"
 
 type ExpenseFormProps = {
   onSubmit: (expenseObject: any) => void,
@@ -49,7 +48,7 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit, onCancel, ed
       return;
     }
     const expenseObject = {
-      amount: parseFloat(expense.amount.value)?.toFixed(2),
+      amount: parseFloat(String(expense.amount.value || "0"))?.toFixed(2),
       date: expense.date.value,
       description: expense.description.value,
       category: expense.category.value,
@@ -59,7 +58,7 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit, onCancel, ed
   }
 
   const handleInputChange = (inputIdentifier: string, enteredValue: any) => {
-    setExpense((prev) => ({
+    setExpense((prev: any) => ({
       ...prev,
       [inputIdentifier]: {
         ...prev[inputIdentifier],
@@ -68,97 +67,64 @@ export const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit, onCancel, ed
     }));
   };
 
-  return <ScrollView style={styles.form} showsVerticalScrollIndicator={false} >
-    <Input  textInputConfig={{
-      onChangeText: handleInputChange.bind(this, "description"),
-      value: expense.description.value
-    }}
-    style={{marginTop: 0}}
-    textInputStyle={{borderWidth: 0, fontSize: 35, fontWeight: "bold", letterSpacing: 2}}
-    placeholder="Description"
-      invalid={!expense.description.isValid}
-    />
-      <Input style={styles.rowInput} textInputConfig={{
-        keyboardType: "decimal-pad",
-        onChangeText: handleInputChange.bind(this, "amount"),
-        value: expense.amount.value?.toString() 
-      }}
-      textInputStyle={{paddingBottom: 10, borderWidth: 0, fontSize: 25, fontWeight: "bold", letterSpacing: 2, borderBottomWidth: 1, borderColor: "#ccc"}}
-
-      placeholder="$ Amount"
+  return (
+    <ScrollView className="mt-2" showsVerticalScrollIndicator={false}>
+      <Input
+        textInputConfig={{
+          onChangeText: (value: string) => handleInputChange("description", value),
+          value: expense.description.value
+        }}
+        style={{ marginTop: 0 }}
+        textInputStyle={{ borderWidth: 0, fontSize: 35, fontWeight: "bold", letterSpacing: 2 }}
+        placeholder="Description"
+        invalid={!expense.description.isValid}
+      />
+      <Input
+        style={{ flex: 1 }}
+        textInputConfig={{
+          keyboardType: "decimal-pad",
+          onChangeText: (value: string) => handleInputChange("amount", value),
+          value: expense.amount.value?.toString()
+        }}
+        textInputStyle={{ paddingBottom: 10, borderWidth: 0, fontSize: 25, fontWeight: "bold", letterSpacing: 2, borderBottomWidth: 1, borderColor: "#ccc" }}
+        placeholder="$ Amount"
         invalid={!expense.amount.isValid}
       />
-    <Text style={{color:GlobalStyles.colors.primary200, fontSize: 24}} >Transaction type</Text>
-    <View style={{flexDirection:"row", justifyContent: "space-around", alignItems:"center", marginVertical: 8}}>
-            <Button buttonContainerStyle={{...styles.transactionButton, backgroundColor: (expense.transactionType.value === "Expense") ? "red" : "#eee"}} buttonStyle={{backgroundColor: "none"}} onPress={() => handleInputChange("transactionType", "Expense")} >Expense</Button>
-            <Button buttonContainerStyle={{...styles.transactionButton, backgroundColor: (expense.transactionType.value === "Income") ? "green" : "#eee"}} buttonStyle={{backgroundColor: "none"}} onPress={() => handleInputChange("transactionType", "Income")} >Income</Button>
-   
-    </View>
-    <Text style={{color:GlobalStyles.colors.primary200, fontSize: 24, marginBottom: 8}} >Date</Text>
-    <DateTimePicker
-      mode="single"
-      date={expense.date.value}
-      onChange={(date) => date && handleInputChange("date", date)}
-      styles={useDefaultStyles()}
-    />
-    <Text style={{color:GlobalStyles.colors.primary200, fontSize: 24, marginBottom: 16, marginTop: 26}}>Select A Category</Text>
-    <CategorySelect onChange={handleInputChange.bind(this, "category")} defaultCategory={expense.category.value} />
-      <Button buttonContainerStyle={styles.button} onPress={handleSubmit} >{isEditing ? "Update" : "Add"}</Button>
-      <Button buttonContainerStyle={styles.button} mode="flat" onPress={onCancel} >Cancel</Button>
-    {isEditing && <View style={styles.delete} ><IconButton icon="trash" color={GlobalStyles.colors.error500} size={36} onPress={onDelete} /></View>}
-  </ScrollView>
+      <Text className="text-gray-600 text-2xl">Transaction type</Text>
+      <View className="flex-row justify-around items-center my-2">
+        <Button
+          containerClassName={`rounded-2xl px-4 py-1 ${expense.transactionType.value === "Expense" ? 'bg-red-500' : 'bg-gray-200'}`}
+          onPress={() => handleInputChange("transactionType", "Expense")}
+        >
+          Expense
+        </Button>
+        <Button
+          containerClassName={`rounded-2xl px-4 py-1 ${expense.transactionType.value === "Income" ? 'bg-green-500' : 'bg-gray-200'}`}
+          onPress={() => handleInputChange("transactionType", "Income")}
+        >
+          Income
+        </Button>
+      </View>
+      <Text className="text-gray-600 text-2xl mb-2">Date</Text>
+      <DateTimePicker
+        mode="single"
+        date={expense.date.value}
+        onChange={(date) => date && handleInputChange("date", date)}
+        styles={useDefaultStyles()}
+      />
+      <Text className="text-gray-600 text-2xl mb-4 mt-7">Select A Category</Text>
+      <CategorySelect onChange={(value: any) => handleInputChange("category", value)} defaultCategory={expense.category.value} />
+      <Button containerClassName="min-w-[120px] mx-2 mb-2" onPress={handleSubmit}>
+        {isEditing ? "Update" : "Add"}
+      </Button>
+      <Button containerClassName="min-w-[120px] mx-2 mb-2" mode="flat" onPress={onCancel}>
+        Cancel
+      </Button>
+      {isEditing && (
+        <View className="mt-4 pt-2 border-t-2 border-gray-600 items-center">
+          <IconButton icon="trash" color="#d64060" size={36} onPress={onDelete} />
+        </View>
+      )}
+    </ScrollView>
+  )
 }
-
-const styles = StyleSheet.create({
-  form: {
-    marginTop: 8,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: GlobalStyles.colors.primary800,
-    marginVertical: 24,
-    textAlign: 'center'
-  },
-  inputsRow: {
-    flexDirection: 'row',
-    justifyContent: "space-between",
-    alignItems: "stretch"
-  },
-  rowInput: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-    padding: 24,
-    backgroundColor: GlobalStyles.colors.primary500
-  },
-  delete: {
-    marginTop: 16,
-    paddingTop: 8,
-    borderTopWidth: 2,
-    borderTopColor: GlobalStyles.colors.primary200,
-    alignItems: "center"
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  button: {
-    minWidth: 120,
-    marginHorizontal: 8,
-    marginBottom: 8,
-  },
-  transactionButton: {
-    backgroundColor: "#eee",
-    borderRadius: 15,
-    paddingHorizontal: 16,
-    paddingVertical: 4
-  },
-  errorText: {
-    textAlign: "center",
-    color: GlobalStyles.colors.error500,
-    margin: 8
-  }
-})

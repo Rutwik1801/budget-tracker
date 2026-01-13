@@ -1,45 +1,24 @@
-import { StyleSheet, Text, View } from "react-native"
-import { GlobalStyles } from "../../constants/styles"
 import { useRoute } from "@react-navigation/native";
 import { getCurrencyFormattedText, getExpenseSum } from "../../utils/utilFunctions";
 import { Expense } from "../../utils/types";
 import { useContext } from "react";
 import { ExpensesContext } from "../../store/expenses-context";
+import { View, Text } from "../base";
 
 export const ExpensesSummary: React.FC<{ periodName: string, expenses: Expense[] }> = ({ periodName, expenses }) => {
   const route = useRoute();
-  const { type } = route?.params
+  const { type } = (route?.params as any) || {}
   const { currency } = useContext(ExpensesContext)
   const expensesSum = getExpenseSum(expenses, type)
 
-  return <View style={styles.container}>
-    <Text style={styles.period} >{periodName}</Text>
-    <Text style={[styles.sum, { color: (expensesSum < 0 || type === "Expense") ? GlobalStyles.colors.primaryRed : GlobalStyles.colors.primaryGreen }]}
-    >{`${type === "Income" ? "+" : type === "Expense" ? "-" : ""}${getCurrencyFormattedText(expensesSum, currency)}`}</Text>
-  </View>
-}
+  const amountColor = (expensesSum < 0 || type === "Expense") ? "text-red-500" : "text-green-500";
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 18,
-    paddingHorizontal: 24,
-    minWidth:200,
-    alignItems:"center",
-    backgroundColor: GlobalStyles.colors.primary50,
-    borderRadius: 10,
-    borderTopLeftRadius: 40,
-    borderBottomRightRadius: 40,
-    alignSelf:"center",
-    marginBottom: 4,
-  },
-  period: {
-    fontSize: 16,
-    fontWeight:"bold",
-    color: GlobalStyles.colors.primary800,
-    marginBottom: 8
-  },
-  sum: {
-    fontSize: 32,
-    color: GlobalStyles.colors.primary50
-  }
-})
+  return (
+    <View className="p-4 px-6 min-w-[200px] items-center bg-white rounded-lg rounded-tl-[40px] rounded-br-[40px] self-center mb-1">
+      <Text className="text-base font-bold text-black mb-2">{periodName}</Text>
+      <Text className={`text-3xl ${amountColor}`}>
+        {`${type === "Income" ? "+" : type === "Expense" ? "-" : ""}${getCurrencyFormattedText(expensesSum, currency)}`}
+      </Text>
+    </View>
+  )
+}

@@ -1,5 +1,5 @@
-import { Pressable, StyleSheet, View } from "react-native"
-import {Ionicons} from "@expo/vector-icons"
+import { Pressable, View } from "../base"
+import { Ionicons } from "@expo/vector-icons"
 
 type IconProps = {
   icon: string,
@@ -11,22 +11,15 @@ type IconProps = {
 
 type IconName = keyof typeof Ionicons.glyphMap
 
-export const IconButton: React.FC<IconProps> = ({icon, color, size, background, onPress}) => {
-  return <Pressable onPress={onPress} style={({pressed}) => pressed && styles.pressed} >
-    <View style={{...styles.buttonContainer, backgroundColor: background}}>
-      <Ionicons name={icon as IconName} size={size} color={color} />
-    </View>
-  </Pressable>
+export const IconButton: React.FC<IconProps> = ({ icon, color, size, background, onPress }) => {
+  return (
+    <Pressable onPress={onPress}>
+      <View 
+        className="rounded-full p-1.5 mx-2 my-0.5"
+        style={{ backgroundColor: background }}
+      >
+        <Ionicons name={icon as IconName} size={size} color={color} />
+      </View>
+    </Pressable>
+  )
 }
-
-const styles = StyleSheet.create({
-  buttonContainer: {
-    borderRadius: 20,
-    padding: 6,
-    marginHorizontal: 8,
-    marginVertical: 2
-  },
-  pressed: {
-    opacity: 0.75
-  }
-})

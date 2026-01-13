@@ -1,5 +1,6 @@
-import { View, Text, TextInput, StyleSheet, KeyboardTypeOptions } from 'react-native';
-import { GlobalStyles } from '../../constants/styles';
+import { KeyboardTypeOptions } from 'react-native';
+import { View, Text } from '../base';
+import { Input as BaseInput } from '../base';
 
 type InputProps = {
   label: string;
@@ -8,7 +9,6 @@ type InputProps = {
   onUpdateValue: (val: string) => void;
   value: any;
   isInvalid?: boolean
-  
 }
 
 function Input({
@@ -18,47 +18,22 @@ function Input({
   onUpdateValue,
   value,
   isInvalid = false,
-}:InputProps) {
+}: InputProps) {
   return (
-    <View style={styles.inputContainer}>
-      <Text style={[styles.label, isInvalid && styles.labelInvalid]}>
+    <View className="my-2">
+      <Text className={`mb-1 font-bold ${isInvalid ? 'text-red-500' : 'text-gray-600'}`}>
         {label}
       </Text>
-      <TextInput
-        style={[styles.input, isInvalid && styles.inputInvalid]}
-        autoCapitalize="none"
+      <BaseInput
+        value={value}
+        onChangeText={onUpdateValue}
         keyboardType={keyboardType}
         secureTextEntry={secure}
-        onChangeText={onUpdateValue}
-        value={value}
+        className={`${isInvalid ? 'border-red-500 bg-red-50' : 'bg-gray-200'}`}
+        isInvalid={isInvalid}
       />
     </View>
   );
 }
 
 export default Input;
-
-const styles = StyleSheet.create({
-  inputContainer: {
-    marginVertical: 8,
-  },
-  label: {
-    color: GlobalStyles.colors.primary200,
-    marginBottom: 4,
-    fontWeight: "bold"
-  },
-  labelInvalid: {
-    color: GlobalStyles.colors.error500,
-  },
-  input: {
-    paddingVertical: 8,
-    paddingHorizontal: 6,
-    backgroundColor: GlobalStyles.colors.primaryGrey,
-    borderRadius: 4,
-    fontSize: 16,
-    color: "black"
-  },
-  inputInvalid: {
-    backgroundColor: GlobalStyles.colors.error50,
-  },
-});
